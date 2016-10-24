@@ -19,7 +19,6 @@ import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -95,7 +94,12 @@ public class CameraCalibrator {
         try {
             FileOutputStream fosExt = new FileOutputStream(fileExt);
                     //Escreve no arquivo
+
                     fosExt.write(mCameraMatrix.dump().toString().getBytes());
+
+                    fosExt.write(mDistortionCoefficients.dump().toString().getBytes());
+
+            //fosExt.write(mDistortionCoefficients.dump().toString().getBytes());
 
                     //Obrigatoriamente você precisa fechar
                     fosExt.close();
