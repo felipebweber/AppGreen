@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="G:\Dropbox\Android Studio Projects\AppGreen\libs\opencv\src\main\jniLibs"/></dataSet><dataSet config="release"><source path="G:\Dropbox\Android Studio Projects\AppGreen\libs\opencv\src\release\jniLibs"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="/Users/felipe/Dropbox/Android Studio Projects/AppGreen/libs/opencv/src/main/jniLibs"/></dataSet><dataSet config="release"><source path="/Users/felipe/Dropbox/Android Studio Projects/AppGreen/libs/opencv/src/release/jniLibs"/></dataSet></merger>

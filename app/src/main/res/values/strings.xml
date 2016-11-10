@@ -13,4 +13,9 @@
     <string name="please_wait">Please, wait</string>
     <string name="original">Original</string>
     <string name="undistorted">Undistorted</string>
+    <string name="title_activity_imagem">ImagemActivity</string>
+    <string name="abrirGaleria">Abrir Galeria</string>
+    <string name="linha">Detecta Linha</string>
+    <string name="processar">Processar</string>
 </resources>
+

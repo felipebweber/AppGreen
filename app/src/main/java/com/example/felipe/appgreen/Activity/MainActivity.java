@@ -13,7 +13,8 @@ import com.example.felipe.appgreen.Tools.Permissao;
 public class MainActivity extends AppCompatActivity {
 
     private Button bt_calibrar;
-    private Button bt_detectar;
+    private Button bt_detectarImagem;
+    private Button bt_detectarVideo;
 
     private String [] permissoesNecessarias = new String[]{
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -29,12 +30,21 @@ public class MainActivity extends AppCompatActivity {
         Permissao.validaPermissoes(1, this, permissoesNecessarias );
 
         bt_calibrar = (Button) findViewById(R.id.calibrarCamera);
-        bt_detectar = (Button) findViewById(R.id.detectar);
+        bt_detectarImagem = (Button) findViewById(R.id.detectarImagem);
+        bt_detectarVideo = (Button) findViewById(R.id.detectarVideo);
 
         bt_calibrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, CameraCalibrationActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        bt_detectarVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, VideoActivity.class);
                 startActivity(intent);
             }
         });

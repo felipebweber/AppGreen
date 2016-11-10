@@ -19,10 +19,11 @@
         android:required="false" />
 
     <application
+        android:hardwareAccelerated="false"
+        android:largeHeap="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:largeHeap="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Activity.MainActivity">
             <intent-filter>
@@ -34,13 +35,16 @@
         <activity
             android:name=".Activity.CameraCalibrationActivity"
             android:label="@string/title_activity_camera_calibration"
-            android:screenOrientation="landscape"
             android:parentActivityName=".Activity.MainActivity"
+            android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.felipe.appgreen.Activity.MainActivity" />
         </activity>
+        <activity android:name=".Activity.VideoActivity"
+            android:parentActivityName=".Activity.MainActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

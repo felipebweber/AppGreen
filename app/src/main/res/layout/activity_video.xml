@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_video"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.example.felipe.appgreen.Activity.VideoActivity">
+
+    <TextView
+        android:id="@+id/textViewK"
+        android:layout_alignBaseline="@+id/btMenosK"
+        android:layout_alignBottom="@+id/btMenosK"
+        android:layout_toEndOf="@+id/btMenosK"
+        android:layout_height="25dp"
+        android:layout_width="40dp"
+        android:textAlignment="center" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:id="@+id/imageView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_height="400dp" />
+
+    <Button
+        android:text="-"
+        android:id="@+id/btMenosK"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+
+        android:layout_below="@+id/textView2"
+        android:layout_alignParentStart="true"
+        android:textSize="12sp" />
+
+    <Button
+        android:text="+"
+        android:id="@+id/btMaisK"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+
+        android:layout_alignBottom="@+id/btMenosK"
+        android:layout_toEndOf="@+id/textViewK"
+        android:textSize="12sp" />
+
+    <TextView
+        android:text="K"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+
+        android:layout_below="@+id/imageView"
+        android:layout_toEndOf="@+id/btMenosK"
+        android:layout_marginStart="15dp" />
+
+    <TextView
+        android:text="T"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView6"
+        android:layout_above="@+id/textViewT"
+        android:layout_alignStart="@+id/textView2" />
+
+    <TextView
+        android:layout_width="40dp"
+        android:layout_height="25dp"
+        android:id="@+id/textViewT"
+        android:textAlignment="center"
+        android:layout_marginBottom="9dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/btMenosT"
+        android:layout_alignTop="@+id/textViewC" />
+
+    <Button
+        android:text="-"
+        android:id="@+id/btMenosT"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignBottom="@+id/textViewT"
+        android:layout_alignParentStart="true"
+        android:textSize="12sp" />
+
+    <Button
+        android:text="+"
+        android:id="@+id/btMaisT"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignBottom="@+id/textViewT"
+        android:layout_toEndOf="@+id/textViewT"
+        android:textSize="12sp" />
+
+    <Button
+        android:text="+"
+        android:id="@+id/btMaisE"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+
+        android:textSize="12sp"
+        android:layout_alignBottom="@+id/textViewK"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/textViewD"
+        android:layout_height="25dp"
+        android:layout_width="40dp"
+        android:textAlignment="center"
+        android:layout_alignBaseline="@+id/btMaisD"
+        android:layout_alignBottom="@+id/btMaisD"
+        android:layout_toStartOf="@+id/btMaisD" />
+
+    <Button
+        android:text="-"
+        android:id="@+id/btMenosE"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+
+        android:textSize="12sp"
+        android:layout_alignBaseline="@+id/imageView"
+        android:layout_alignBottom="@+id/btMaisK"
+        android:layout_toStartOf="@+id/textViewE" />
+
+    <Button
+        android:text="+"
+        android:id="@+id/btMaisD"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+
+        android:textSize="12sp"
+        android:layout_alignBaseline="@+id/btMaisT"
+        android:layout_alignBottom="@+id/btMaisT"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:text="E"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView3"
+
+        android:layout_marginEnd="9dp"
+        android:layout_below="@+id/imageView"
+        android:layout_alignStart="@+id/textView5" />
+
+    <TextView
+        android:id="@+id/textViewE"
+        android:layout_height="25dp"
+        android:layout_width="40dp"
+        android:textAlignment="center"
+        android:layout_alignBaseline="@+id/btMaisE"
+        android:layout_alignBottom="@+id/btMaisE"
+        android:layout_toStartOf="@+id/btMaisE" />
+
+    <Button
+        android:text="-"
+        android:id="@+id/btMenosD"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+
+        android:textSize="12sp"
+        android:layout_alignBottom="@+id/textViewD"
+        android:layout_toStartOf="@+id/textViewD" />
+
+    <TextView
+        android:text="D"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView5"
+
+        android:layout_marginEnd="13dp"
+        android:layout_above="@+id/textViewD"
+        android:layout_toStartOf="@+id/btMaisD" />
+
+    <Button
+        android:text="RST"
+        android:layout_marginStart="9dp"
+        android:id="@+id/btResetKeT"
+        android:textSize="8sp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignTop="@+id/btMaisK"
+        android:layout_toEndOf="@+id/btMaisK" />
+
+    <Button
+        android:text="RST"
+        android:id="@+id/btResetEeD"
+        android:textSize="8sp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="7dp"
+        android:layout_alignTop="@+id/btMaisE"
+        android:layout_toStartOf="@+id/btMenosE" />
+
+    <TextView
+        android:layout_width="40dp"
+        android:layout_height="25dp"
+        android:id="@+id/textViewC"
+        android:textAlignment="center"
+        android:layout_marginBottom="11dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/btMaisC" />
+
+    <TextView
+        android:text="C"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView8"
+        android:layout_above="@+id/textViewD"
+        android:layout_toStartOf="@+id/btResetEeD"
+        android:layout_marginEnd="12dp" />
+
+    <Button
+        android:text="-"
+        android:id="@+id/btMenosC"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:textSize="12sp"
+        android:layout_below="@+id/textView8"
+        android:layout_alignEnd="@+id/btResetKeT" />
+
+    <Button
+        android:text="+"
+        android:id="@+id/btMaisC"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:textSize="12sp"
+        android:layout_below="@+id/textView8"
+        android:layout_alignEnd="@+id/btResetEeD" />
+
+</RelativeLayout>
