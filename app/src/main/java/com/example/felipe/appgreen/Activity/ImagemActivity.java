@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -43,10 +44,10 @@ import org.opencv.imgproc.Imgproc;
 import org.opencv.imgproc.Moments;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ImagemActivity extends AppCompatActivity {
 
@@ -79,6 +80,7 @@ public class ImagemActivity extends AppCompatActivity {
     private Button btMenosC;
 
     private TextView textViewC;
+    private Toolbar toolbar;
 
 
     // Esse era para o morango
@@ -119,6 +121,10 @@ public class ImagemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_imagem);
+
+//        toolbar = (Toolbar) findViewById(R.id.to;
+//        toolbar.setTitle("Imagem");
+//        setSupportActionBar(toolbar);
 
         btMaisK = (Button) findViewById(R.id.btMaisKi);
         btMaisT = (Button) findViewById(R.id.btMaisTi);

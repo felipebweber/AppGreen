@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -48,6 +47,8 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import wseemann.media.FFmpegMediaMetadataRetriever;
 
 public class VideoActivity extends AppCompatActivity {
 
@@ -823,8 +824,8 @@ public class VideoActivity extends AppCompatActivity {
 
 
         Uri videoFileUri = Uri.parse(path);
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-        //FFmpegMediaMetadataRetriever retriever = new FFmpegMediaMetadataRetriever();
+        //MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+        FFmpegMediaMetadataRetriever retriever = new FFmpegMediaMetadataRetriever();
         retriever.setDataSource(path);
 
         //retriever.setDataSource(videoFile.getAbsolutePath());
@@ -858,7 +859,7 @@ public class VideoActivity extends AppCompatActivity {
             //bitmap = retriever.getFrameAtTime(i*1000, FFmpegMediaMetadataRetriever.OPTION_CLOSEST);
             //bitmap = retriever.getFrameAtTime(i*1000);
             //bitmap = retriever.getFrameAtTime(i*2000, FFmpegMediaMetadataRetriever.OPTION_CLOSEST); //funcionando precariamente
-            bitmap = retriever.getFrameAtTime(i*1000, MediaMetadataRetriever.OPTION_CLOSEST);
+            bitmap = retriever.getFrameAtTime(i*1000, FFmpegMediaMetadataRetriever.OPTION_CLOSEST);
             //bitmap = retriever.getScaledFrameAtTime(i*1000, 360, 480);
 
             //bitmap = retriever.getScaledFrameAtTime(i, 360, 480);
