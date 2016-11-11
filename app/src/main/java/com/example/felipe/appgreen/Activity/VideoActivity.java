@@ -364,7 +364,7 @@ public class VideoActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
 
         MenuInflater inflater = getMenuInflater(); // exibir menu na tela
-        inflater.inflate(R.menu.menu_imagem, menu);
+        inflater.inflate(R.menu.menu_video, menu);
         return true;
     }
 
@@ -532,7 +532,7 @@ public class VideoActivity extends AppCompatActivity {
 
                 //Imgproc.HoughLinesP(edges, lines, 5, Math.PI/180, 50, 420, 400); // faz parte do antigo, morango
                 //Imgproc.HoughLinesP(edges, lines, 5, Math.PI/180, 50, 300, 200); // faz parte do antigo, cebola
-                Imgproc.HoughLinesP(edges, lines, 1, Math.PI/180, minimoCruzamento, 400, 480); // faz parte do antigo, cebola novo (13-10-16)
+                Imgproc.HoughLinesP(edges, lines, 1, Math.PI/180, minimoCruzamento, 350, 580); // faz parte do antigo, cebola novo (13-10-16)
                 //Imgproc.HoughLinesP(edges, lines, 10, Math.PI/180, 50, 420, 400);
 
                 //Imgproc.HoughLines(edges, lines, 1, Math.PI / 180, 10, 50, 0);

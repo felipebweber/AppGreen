@@ -49,12 +49,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        bt_detectar.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent  = new Intent(MainActivity.this, DetectarActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+        bt_detectarImagem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent  = new Intent(MainActivity.this, ImagemActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

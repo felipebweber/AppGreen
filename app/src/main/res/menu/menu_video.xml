@@ -10,10 +10,10 @@
         android:title="@string/abrirGaleria"/>
 
     <item
-        android:id="@+id/action_reset_imagem"
+        android:id="@+id/action_processar"
         android:orderInCategory="4"
         app:showAsAction="never"
-        android:title="@string/rst_imagem" >
+        android:title="@string/processar" >
     </item>
 
     <item
