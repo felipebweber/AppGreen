@@ -82,6 +82,12 @@ public class ImagemActivity extends AppCompatActivity {
     private TextView textViewC;
     private Toolbar toolbar;
 
+    private TextView bicoUm;
+    private TextView bicoDois;
+    private TextView bicoTres;
+    private TextView bicoQuatro;
+    private TextView bicoCinco;
+
 
     // Esse era para o morango
 //    private final double k = 0.65;
@@ -150,6 +156,23 @@ public class ImagemActivity extends AppCompatActivity {
         btMenosC = (Button) findViewById(R.id.btMenosCi);
 
         textViewC = (TextView) findViewById(R.id.textViewCi);
+
+        bicoUm = (TextView) findViewById(R.id.textBicoUm);
+        bicoDois = (TextView) findViewById(R.id.textBicoDois);
+        bicoTres = (TextView) findViewById(R.id.textBicoTres);
+        bicoQuatro = (TextView) findViewById(R.id.textBicoQuatro);
+        bicoCinco = (TextView) findViewById(R.id.textBicoCinco);
+
+        bicoUm.setTextColor(getResources().getColor(R.color.colorBicoDesligado));
+        bicoUm.setText("▇▇");
+        bicoDois.setTextColor(getResources().getColor(R.color.colorBicoDesligado));
+        bicoDois.setText("▇▇");
+        bicoTres.setTextColor(getResources().getColor(R.color.colorBicoDesligado));
+        bicoTres.setText("▇▇");
+        bicoQuatro.setTextColor(getResources().getColor(R.color.colorBicoDesligado));
+        bicoQuatro.setText("▇▇");
+        bicoCinco.setTextColor(getResources().getColor(R.color.colorBicoDesligado));
+        bicoCinco.setText("▇▇");
 
         Permissao.validaPermissoes(1, this, permissoesNecessarias );
 
@@ -416,6 +439,16 @@ public class ImagemActivity extends AppCompatActivity {
                 toast.show();
                 return true;
             }
+//            bicoUm.setTextColor(getResources().getColor(R.color.colorBicoDesligado));
+//            bicoUm.setText("▇▇");
+//            bicoDois.setTextColor(getResources().getColor(R.color.colorBicoDesligado));
+//            bicoDois.setText("▇▇");
+//            bicoTres.setTextColor(getResources().getColor(R.color.colorBicoDesligado));
+//            bicoTres.setText("▇▇");
+//            bicoQuatro.setTextColor(getResources().getColor(R.color.colorBicoDesligado));
+//            bicoQuatro.setText("▇▇");
+//            bicoCinco.setTextColor(getResources().getColor(R.color.colorBicoDesligado));
+//            bicoCinco.setText("▇▇");
 
             displayImage(sampledImage);
         }
@@ -575,16 +608,28 @@ public class ImagemActivity extends AppCompatActivity {
 
             for(int i = 0; i < lines.cols(); i++) { // faz parte do antigo
                 double[] val = lines.get(0, i); // faz parte do antigo
-//                rho = val[0];
-//                theta = val[1];
-//                a = Math.cos(theta);
-//                b = Math.sin(rho);
-//                x0 = a * rho;
-//                y0 = b * rho;
-//                pt1.x = Math.round(x0 + 1000*(-b));
-//                pt1.y = Math.round(y0 + 1000*a);
-//                pt2.x = Math.round(x0 + 1000*(-b));
-//                pt2.y = Math.round(y0 + 1000*a);
+                Log.i("PONTOS", "PONTO1 " +val[0]+" "+val[1]);
+                Log.i("PONTOS", "PONTO2 " +val[2]+" "+val[3]);
+                if(val[0]> 0 && val[0] < 90){
+                    bicoUm.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
+                    bicoUm.setText("▇▇");
+                }
+                if(val[0]>= 90 && val[0] < 150){
+                    bicoDois.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
+                    bicoDois.setText("▇▇");
+                }
+                if(val[0]>= 150 && val[0] < 180){
+                    bicoTres.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
+                    bicoTres.setText("▇▇");
+                }
+                if(val[0]> 150 && val[0] < 270){
+                    bicoQuatro.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
+                    bicoQuatro.setText("▇▇");
+                }
+                if(val[0]>= 270 && val[0] < 360){
+                    bicoCinco.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
+                    bicoCinco.setText("▇▇");
+                }
                 Core.line(outDilate, new Point(val[0], val[1]), new Point(val[2], val[3]), new Scalar(0, 0, 255), 2); // faz parte do antigo
                 //Core.line(outDilate, pt1, pt2, new Scalar(0, 0, 255), 3);
             } // faz parte do antigo
@@ -728,8 +773,7 @@ public class ImagemActivity extends AppCompatActivity {
 //    }
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
         if (!OpenCVLoader.initDebug()) {
             Log.d(TAG, "Internal OpenCV library not found. Using OpenCV Manager for initialization");

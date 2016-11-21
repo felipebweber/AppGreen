@@ -8,6 +8,15 @@
     tools:context="com.example.felipe.appgreen.Activity.VideoActivity">
 
     <TextView
+        android:text="||||||"
+        android:layout_below="@+id/imageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="7dp"
+        android:id="@+id/textBicoTres"
+        android:layout_width="25dp"
+        android:layout_height="20dp" />
+
+    <TextView
         android:id="@+id/textViewK"
         android:layout_alignBaseline="@+id/btMenosK"
         android:layout_alignBottom="@+id/btMenosK"
@@ -21,17 +30,7 @@
         android:id="@+id/imageView"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_height="400dp" />
-
-    <Button
-        android:text="-"
-        android:id="@+id/btMenosK"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-
-        android:layout_below="@+id/textView2"
-        android:layout_alignParentStart="true"
-        android:textSize="12sp" />
+        android:layout_height="360dp" />
 
     <Button
         android:text="+"
@@ -42,16 +41,6 @@
         android:layout_alignBottom="@+id/btMenosK"
         android:layout_toEndOf="@+id/textViewK"
         android:textSize="12sp" />
-
-    <TextView
-        android:text="K"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView2"
-
-        android:layout_below="@+id/imageView"
-        android:layout_toEndOf="@+id/btMenosK"
-        android:layout_marginStart="15dp" />
 
     <TextView
         android:text="T"
@@ -129,16 +118,6 @@
         android:layout_alignBaseline="@+id/btMaisT"
         android:layout_alignBottom="@+id/btMaisT"
         android:layout_alignParentEnd="true" />
-
-    <TextView
-        android:text="E"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView3"
-
-        android:layout_marginEnd="9dp"
-        android:layout_below="@+id/imageView"
-        android:layout_alignStart="@+id/textView5" />
 
     <TextView
         android:id="@+id/textViewE"
@@ -224,5 +203,72 @@
         android:textSize="12sp"
         android:layout_below="@+id/textView8"
         android:layout_alignEnd="@+id/btResetEeD" />
+
+    <Button
+        android:text="-"
+        android:id="@+id/btMenosK"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+
+        android:textSize="12sp"
+        android:layout_above="@+id/textView8"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:text="K"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+
+        android:layout_marginStart="12dp"
+        android:layout_above="@+id/btResetEeD"
+        android:layout_toEndOf="@+id/btMenosK"
+        android:layout_marginBottom="7dp" />
+
+    <TextView
+        android:text="E"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView3"
+        android:layout_alignBaseline="@+id/textView2"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignStart="@+id/textView5" />
+
+    <TextView
+        android:text="||||||"
+        android:id="@+id/textBicoQuatro"
+        android:layout_width="25dp"
+        android:layout_height="20dp"
+        android:layout_alignBaseline="@+id/textBicoTres"
+        android:layout_alignBottom="@+id/textBicoTres"
+        android:layout_alignEnd="@+id/btResetEeD" />
+
+    <TextView
+        android:text="||||||"
+        android:id="@+id/textBicoDois"
+        android:layout_width="25dp"
+        android:layout_height="20dp"
+        android:layout_alignBaseline="@+id/textBicoTres"
+        android:layout_alignBottom="@+id/textBicoTres"
+        android:layout_alignStart="@+id/btResetKeT" />
+
+    <TextView
+        android:text="||||||"
+        android:id="@+id/textBicoUm"
+        android:layout_width="25dp"
+        android:layout_height="20dp"
+        android:layout_alignBaseline="@+id/textBicoDois"
+        android:layout_alignBottom="@+id/textBicoDois"
+        android:layout_toEndOf="@+id/textView2" />
+
+    <TextView
+        android:text="||||||"
+        android:id="@+id/textBicoCinco"
+        android:layout_width="25dp"
+        android:layout_height="20dp"
+        android:layout_alignBaseline="@+id/textBicoQuatro"
+        android:layout_alignBottom="@+id/textBicoQuatro"
+        android:layout_toStartOf="@+id/textView3" />
 
 </RelativeLayout>
