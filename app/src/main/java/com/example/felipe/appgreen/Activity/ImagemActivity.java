@@ -93,21 +93,13 @@ public class ImagemActivity extends AppCompatActivity {
     int cont3 = 0;
     int cont4 = 0;
     int cont5 = 0;
-
-    // Esse era para o morango
-//    private final double k = 0.65;
-//    private final double t = 20;
-//
-//    private final int erocao = 4;
-//    private final int dilatacao = 25;
-    // ate aqui do morango
+    
 
     private float k = 0.68f;
     private final float kRST = 0.68f;
     private float t = 20.0f;
     private final float tRST = 20.0f;
 
-    //private final float erocao = (float) 2.5;
     private int erocao = 3;
     private final int erocaoRST = 3;
     private int dilatacao = 7;
@@ -116,6 +108,7 @@ public class ImagemActivity extends AppCompatActivity {
     private int minimoCruzamento = 25;
     private final int minimoCruzamentoRST = 25;
 
+    // Matrizes auxiliares
     Mat sampledImage = null;
     Mat originalImage = null;
     Mat outErode = null;
@@ -133,9 +126,6 @@ public class ImagemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_imagem);
 
-//        toolbar = (Toolbar) findViewById(R.id.to;
-//        toolbar.setTitle("Imagem");
-//        setSupportActionBar(toolbar);
 
         btMaisK = (Button) findViewById(R.id.btMaisKi);
         btMaisT = (Button) findViewById(R.id.btMaisTi);
@@ -394,8 +384,7 @@ public class ImagemActivity extends AppCompatActivity {
 
 
     private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
-        //Intent intent = new Intent("org.opencv.engine.BIND");
-        //intent.setPackage("org.opencv.engine");
+
         @Override
         public void onManagerConnected(int status) {
             switch (status) {
@@ -431,9 +420,6 @@ public class ImagemActivity extends AppCompatActivity {
             return true;
         }
 
-        //Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        //startActivityForResult(i, RESULT_LOAD_IMAGE);
-
         if(id == R.id.action_reset_imagem){
             if(sampledImage==null){
                 Context context = getApplicationContext();
@@ -444,16 +430,7 @@ public class ImagemActivity extends AppCompatActivity {
                 toast.show();
                 return true;
             }
-//            bicoUm.setTextColor(getResources().getColor(R.color.colorBicoDesligado));
-//            bicoUm.setText("▇▇");
-//            bicoDois.setTextColor(getResources().getColor(R.color.colorBicoDesligado));
-//            bicoDois.setText("▇▇");
-//            bicoTres.setTextColor(getResources().getColor(R.color.colorBicoDesligado));
-//            bicoTres.setText("▇▇");
-//            bicoQuatro.setTextColor(getResources().getColor(R.color.colorBicoDesligado));
-//            bicoQuatro.setText("▇▇");
-//            bicoCinco.setTextColor(getResources().getColor(R.color.colorBicoDesligado));
-//            bicoCinco.setText("▇▇");
+
             bicoUm.setTextColor(getResources().getColor(R.color.colorBicoDesligado));
             bicoUm.setText("▇▇");
             bicoDois.setTextColor(getResources().getColor(R.color.colorBicoDesligado));
@@ -490,19 +467,18 @@ public class ImagemActivity extends AppCompatActivity {
             rgbGreen = new Mat();
 
             sampledImage.copyTo(rgbGreen);
-            Size size = rgbGreen.size();
+            //Size size = rgbGreen.size();
             for(int i=0; i<sampledImage.rows(); i++){
                 for(int j=0; j<sampledImage.cols(); j++){
                     double[] data = sampledImage.get(i,j);
+                    // condição necessária para detecção do verde
                     if((data[1] > k * (data[0]+data[2])) & (data[0]+data[2] > t)){
-                        //if(data[1] > k * (data[0]+data[2])){
+
                         data[0]=255;
                         data[1]=255;
                         data[2]=255;
-                        //rgbGreen.put(i,j,255);
                         rgbGreen.put(i,j,data);
 
-                        //Log.i("DATA","NO PRIMEIRO IF ");
                     }else{
                         data[0]=0;
                         data[1]=0;
@@ -512,34 +488,39 @@ public class ImagemActivity extends AppCompatActivity {
                 }
             }
 
+
             outErode = new Mat();
             outDilate = new Mat();
-//            Imgproc.erode(rgbGreen, outErode, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(2,2)));
-//            Imgproc.dilate(outErode, outDilate, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(40, 40)));
+
+            // Operações morfologicas erosão e dilatação
             Imgproc.erode(rgbGreen, outErode, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(erocao, erocao)));
             Imgproc.dilate(outErode, outDilate, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(dilatacao, dilatacao)));
 
 
             Mat outDilateGray = new Mat();
+
+            // Converte o resultado da dilatação para gray
             Imgproc.cvtColor(outDilate, outDilateGray, Imgproc.COLOR_BGRA2GRAY);
 
             List<MatOfPoint> contours = new ArrayList<>();
             contours.clear();
             Mat hierarchy = new Mat();
+
+            // Função retorna os contornos
             Imgproc.findContours(outDilateGray, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
 
-//            Imgproc.drawContours(outDilate, contours, -1, new Scalar(0, 255, 0), 3);
+
             Log.i("CONTORNO", "CONTORNO: " + contours.size());
 
-//            // daqui
+            // Momentos são utilizados para encontrar a soma dos pixels que compõem o contorno
             List<Moments> mu = new ArrayList<>(contours.size());
-            //ArrayList<Moments> mmu = new ArrayList<>(contours.size());
 
-            List<Point> points = new ArrayList<>(); // Mudanca para usar ransac
+            // Variavel auxilar para encontrar o centroide do objeto.
+            List<Point> points = new ArrayList<>();
 
 
+            // For responsavel por encontrar todos os centroides
             for (int i = 0; i < contours.size(); i++) {
-                //Moments moments = Imgproc.moments(contours.get(i));
                 mu.add(i, Imgproc.moments(contours.get(i), true));
                 Log.i("CONTOURS", "CONTOURS: " + contours.get(i).toList());
                 Log.i("CONTOURS", "CONTOURSMOMENTS: " + mu.size());
@@ -549,17 +530,20 @@ public class ImagemActivity extends AppCompatActivity {
 
                 Point centroid = new Point();
 
+                // Obtem os centroides de x e y
                 centroid.x = p.get_m10() / p.get_m00();
                 centroid.y = p.get_m01() / p.get_m00();
-                //points.add(i, new Point(centroid.x,centroid.y));
+
                 points.add(new Point(centroid.x,centroid.y)); // Mudanca para usar ransac
                 Log.i("PONTO", "X-Y: " + centroid);
                 Log.i("POINTS", "X-Y: " + points.get(i).x);
 
+                // Adiciona o centroide no objeto
                 Core.circle(outDilate, centroid, 5, new Scalar(255, 0, 0), -1);
             }
 
 
+            // For utilizado para remover o branco da imagem
             for(int i=0; i<outDilate.rows(); i++){
                 for(int j=0; j<outDilate.cols(); j++){
                     double[] data = outDilate.get(i,j);
@@ -569,12 +553,8 @@ public class ImagemActivity extends AppCompatActivity {
                         data[2]=0;
                         outDilate.put(i,j,data);
 
-                        //Log.i("DATA","NO PRIMEIRO IF ");
                     }else{
-//                        data[0]=0;
-//                        data[1]=0;
-//                        data[2]=0;
-//                        outDilate.put(i, j, data);
+
                     }
                 }
             }
@@ -593,24 +573,12 @@ public class ImagemActivity extends AppCompatActivity {
             int lowThreshold = 25; // faz parte do antigo
             int ratio = 3; // faz parte do antigo
 
-            Point pt1 = new Point();
-            Point pt2 = new Point();
-            double a, b;
-            double x0, y0;
-            double rho, theta;
-
             Imgproc.Canny(grayLine, edges, lowThreshold, lowThreshold * ratio); // faz parte do antigo
 
-            Mat lines = new Mat(); // faz parte do antigo
-            //Imgproc.HoughLinesP(edges, lines, 1, Math.PI / 180, 55, 70, 200);
+            Mat lines = new Mat(); // matriz auxiliar
 
-            //Imgproc.HoughLinesP(edges, lines, 5, Math.PI/180, 50, 420, 400); // faz parte do antigo, morango
-            //Imgproc.HoughLinesP(edges, lines, 5, Math.PI/180, 50, 300, 200); // faz parte do antigo, cebola
             Imgproc.HoughLinesP(edges, lines, 1, Math.PI/180, minimoCruzamento, 300, 200); // faz parte do antigo, cebola novo (13-10-16)
-            //Imgproc.HoughLinesP(edges, lines, 10, Math.PI/180, 50, 420, 400);
 
-            //Imgproc.HoughLines(edges, lines, 1, Math.PI / 180, 10, 50, 0);
-            //Imgproc.HoughLines(edges, lines, 1, Math.PI / 180, 10);
             /*
             - Saida do detector de bordas (edges)
             - Vetor que armazena os parametros de linhas detectadas (lines)
@@ -620,11 +588,7 @@ public class ImagemActivity extends AppCompatActivity {
             - Numero minimo de pontos que podem formar uma linha (70)
             - Diferenca maxima entre dois pontos a serem considerados na mesma linha (200)
              */
-            //Imgproc.HoughLines(edges, lines, 1, Math.PI / 180, 100, 0, 0);
 
-//            Imgproc.HoughLines(edges, lines, 1, Math.PI / 180, 100, 50, 0);
-
-//            Log.i("LINE", "LINE "+lines.dump().toString());
 
             for(int i = 0; i < lines.cols(); i++) { // faz parte do antigo
                 double[] val = lines.get(0, i); // faz parte do antigo
@@ -657,99 +621,61 @@ public class ImagemActivity extends AppCompatActivity {
 //                    bicoCinco.setText("▇▇");
 //                }
 
-                if(((val[0]>= 30) && (val[0] < 90)) && (cont1==1)){
-                    cont1 = 2;
+//                if(((val[0]>= 30) && (val[0] < 90)) && (cont1==1)){
+//                    cont1 = 2;
+//                    bicoUm.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
+//                    bicoUm.setText("▇▇");
+//                }
+//                if(((val[0]>= 90) && (val[0] < 150)) && (cont2 == 1)){
+//                    cont2 = 2;
+//                    bicoDois.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
+//                    bicoDois.setText("▇▇");
+//                }
+//                if(((val[0]>= 150) && (val[0] < 180)) && (cont3 == 1)){
+//                    cont3 = 2;
+//                    bicoTres.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
+//                    bicoTres.setText("▇▇");
+//                }
+//                if(((val[0]>= 180) && (val[0] < 300)) && (cont4 == 1)){
+//                    cont4 = 2;
+//                    bicoQuatro.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
+//                    bicoQuatro.setText("▇▇");
+//                }
+//                if((val[0]>= 270) && (val[0] <= 330) && (cont5==1)){
+//                    cont5=2;
+//                    bicoCinco.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
+//                    bicoCinco.setText("▇▇");
+//                }
+
+                if((val[0]> 30) && (val[0] < 90)){
                     bicoUm.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
                     bicoUm.setText("▇▇");
                 }
-                if(((val[0]>= 90) && (val[0] < 150)) && (cont2 == 1)){
-                    cont2 = 2;
+                else if((val[0]>= 90) && (val[0] < 150)){
                     bicoDois.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
                     bicoDois.setText("▇▇");
                 }
-                if(((val[0]>= 150) && (val[0] < 180)) && (cont3 == 1)){
-                    cont3=2;
+                else if((val[0]>= 150) && (val[0] < 180)){
                     bicoTres.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
                     bicoTres.setText("▇▇");
                 }
-                if(((val[0]>= 180) && (val[0] < 300)) && (cont4 == 1)){
-                    cont4 = 2;
+                else if((val[0]> 180) && (val[0] < 270)){
                     bicoQuatro.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
                     bicoQuatro.setText("▇▇");
                 }
-                if((val[0]>= 270) && (val[0] <= 330) && (cont5==1)){
-                    cont5=2;
+                else if((val[0]>= 270) && (val[0] < 330)){
                     bicoCinco.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
                     bicoCinco.setText("▇▇");
                 }
 
-//                if(val[0]> 30 && val[0] < 90){
-//                    bicoUm.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
-//                    bicoUm.setText("▇▇");
-//                }
-//                if(val[0]>= 90 && val[0] < 150){
-//                    bicoDois.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
-//                    bicoDois.setText("▇▇");
-//                }
-//                if(val[0]>= 150 && val[0] < 180){
-//                    bicoTres.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
-//                    bicoTres.setText("▇▇");
-//                }
-//                if(val[0]> 180 && val[0] < 270){
-//                    bicoQuatro.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
-//                    bicoQuatro.setText("▇▇");
-//                }
-//                if(val[0]>= 270 && val[0] < 330){
-//                    bicoCinco.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
-//                    bicoCinco.setText("▇▇");
-//                }
-
-
-//                if((val[0]> 30) && (val[0] < 90)){
-//                    bicoUm.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
-//                    bicoUm.setText("▇▇");
-//                }
-//                else if((val[0]>= 90) && (val[0] < 150)){
-//                    bicoDois.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
-//                    bicoDois.setText("▇▇");
-//                }
-//                else if((val[0]>= 150) && (val[0] < 180)){
-//                    bicoTres.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
-//                    bicoTres.setText("▇▇");
-//                }
-//                else if((val[0]> 180) && (val[0] < 270)){
-//                    bicoQuatro.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
-//                    bicoQuatro.setText("▇▇");
-//                }
-//                else if((val[0]>= 270) && (val[0] < 330)){
-//                    bicoCinco.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
-//                    bicoCinco.setText("▇▇");
-//                }
-
                 Core.line(outDilate, new Point(val[2], val[3]), new Point(val[0], val[1]), new Scalar(0, 0, 255), 2); // faz parte do antigo
                 val[0] = -1;
-                //Core.line(outDilate, pt1, pt2, new Scalar(0, 0, 255), 3);
             } // faz parte do antigo
 
-            // ############### e termina aqui ##########################
-//            Imgproc.HoughLinesP(edges, lines, 1, Math.PI / 180, 50, 50, 50);
-//            for(int i = 0; i < lines.cols(); i++) {
-//                double[] val = lines.get(0, i);
-//                Core.line(outDilate, new Point(val[0], val[1]), new Point(val[2], val[3]), new Scalar(0, 0, 255), 2);
-//            }
-
-
-            //Core.line(outDilate, melhorPonto[0], melhorPonto[1], new Scalar(0,255,0), 2);
             displayImage(outDilate);
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    static Mat ImageCanny(Mat imageGray) {
-        Mat imgCanny = new Mat();
-        Imgproc.Canny(imageGray, imgCanny, 10, 200);
-        return imgCanny;
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data){
@@ -758,8 +684,6 @@ public class ImagemActivity extends AppCompatActivity {
                 Uri selectedImageUri = data.getData();
 
                 selectedImagePath = getPath(selectedImageUri); // getPath funcao
-//                Log.i(TAG, "selectedImagePath: " + selectedImagePath);
-//                Log.i(TAG, "ANTES DISPLAY ");
 
                 loadImage(selectedImagePath); // loadImage funcao
 
@@ -785,15 +709,13 @@ public class ImagemActivity extends AppCompatActivity {
 
     private void loadImage(String path){
         Log.i("FLAG","LOAD IMAGE " + path);
-        //originalImage = Imgcodecs.imread(path);
-        //originalImage = Imgcodecs.imread(path); //aqui mudou
+
         originalImage = Highgui.imread(path);
         Log.i("FLAG", "Depois do original image "+originalImage);
         rgbImage = new Mat();
         sampledImage = new Mat();
         Log.i("FLAG","LOAD IMAGE MAT");
 
-        //Imgproc.cvtColor(originalImage, rgbImage, Imgproc.COLOR_BGR2RGB);
         Imgproc.cvtColor(originalImage, rgbImage, Imgproc.COLOR_BGR2RGB);
 
         Log.i("FLAG","LOAD IMAGE DEPOIS IMGPROC");
@@ -807,9 +729,6 @@ public class ImagemActivity extends AppCompatActivity {
         int heigth = displayMetrics.heightPixels; // altura
         Log.i("FLAG","LOAD IMAGE ANTES DOWNSAMPLERATIO");
         double downSampleRatio = calculateSubSampleSize(rgbImage,width,heigth);
-        //double downSampleRatio = calculateSubSampleSize(rgbImage,360,heigth);
-
-        //Imgproc.resize(rgbImage,sampledImage,new Size(),width, height, Imgproc.INTER_AREA);
 
         Imgproc.resize(rgbImage, sampledImage, new Size(), downSampleRatio, downSampleRatio, Imgproc.INTER_AREA);
         //Imgproc.resize(rgbImage, sampledImage, new Size(), 360, 480, Imgproc.INTER_AREA);
@@ -864,13 +783,6 @@ public class ImagemActivity extends AppCompatActivity {
         iv.setImageBitmap(bitmap);
     }
 
-//    @Override
-//    public void onResume(){
-//        super.onResume();
-//        //OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_11, this, mLoaderCallback);
-//        OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_3, this, mLoaderCallback);
-//    }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -883,17 +795,7 @@ public class ImagemActivity extends AppCompatActivity {
         }
     }
 
-//    public Mat erode(Mat input, int elementSize, int elementShape){
-//        Mat outputImage = new Mat();
-//        Mat element = getKernelFromShape(elementSize, elementShape);
-//        Imgproc.erode(input,outputImage, element);
-//        return outputImage;
-//    }
-
-//    private Mat getKernelFromShape(int elementSize, int elementShape) {
-//        return Imgproc.getStructuringElement(elementShape, new Size(elementSize*2+1, elementSize*2+1), new Point(elementSize, elementSize) );
-//    }
-
+    // Carrega os valores K e T
     private void carregaValoresKeT(){
         PreferenciasKeT preferenciasKeT = new PreferenciasKeT(ImagemActivity.this);
         float kk = preferenciasKeT.get_k();
@@ -906,6 +808,7 @@ public class ImagemActivity extends AppCompatActivity {
         textViewT.setText(formato.format(tt)+"");
     }
 
+    // Carrega os valores E e D
     private void carregaValoresEeD(){
         PreferenciasEeD preferenciasEeD = new PreferenciasEeD(ImagemActivity.this);
         int erosaoP = preferenciasEeD.get_E();
@@ -918,6 +821,7 @@ public class ImagemActivity extends AppCompatActivity {
         textViewD.setText(dilatacaoD+"");
     }
 
+    // Carrega o valor do minimo cruzamento
     private void carregaValorMinCruz(){
         PreferenciasMinCruz preferenciasMinCruz = new PreferenciasMinCruz(ImagemActivity.this);
         int  minimoCruzamento = preferenciasMinCruz.get_C();
