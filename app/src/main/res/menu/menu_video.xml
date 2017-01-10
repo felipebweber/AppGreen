@@ -17,10 +17,10 @@
     </item>
 
     <item
-        android:id="@+id/action_linha"
-        android:orderInCategory="6"
+        android:id="@+id/action_reset_imagem"
+        android:orderInCategory="2"
         app:showAsAction="never"
-        android:title="@string/linha" >
+        android:title="@string/rst_imagem" >
     </item>
 
 </menu>

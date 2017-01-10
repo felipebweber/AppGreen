@@ -427,8 +427,30 @@ public class VideoActivity extends AppCompatActivity {
             return true;
         }
 
-        //Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        //startActivityForResult(i, RESULT_LOAD_IMAGE);
+        if(id == R.id.action_reset_imagem){
+            if(sampledImage==null){
+                Context context = getApplicationContext();
+                CharSequence text = "Você precisa carregar uma imagem primeiro";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+                return true;
+            }
+
+            bicoUm.setTextColor(getResources().getColor(R.color.colorBicoDesligado));
+            bicoUm.setText("▇▇");
+            bicoDois.setTextColor(getResources().getColor(R.color.colorBicoDesligado));
+            bicoDois.setText("▇▇");
+            bicoTres.setTextColor(getResources().getColor(R.color.colorBicoDesligado));
+            bicoTres.setText("▇▇");
+            bicoQuatro.setTextColor(getResources().getColor(R.color.colorBicoDesligado));
+            bicoQuatro.setText("▇▇");
+            bicoCinco.setTextColor(getResources().getColor(R.color.colorBicoDesligado));
+            bicoCinco.setText("▇▇");
+
+            displayImage(sampledImage);
+        }
 
         if (id == R.id.action_processar){
 
@@ -468,19 +490,19 @@ public class VideoActivity extends AppCompatActivity {
                 rgbGreen = new Mat();
 
                 sampledImage.copyTo(rgbGreen);
-                //Size size = rgbGreen.size();
+                // For para percorrer linha x coluna
                 for(int i=0; i<sampledImage.rows(); i++){
                     for(int j=0; j<sampledImage.cols(); j++){
                         double[] data = sampledImage.get(i,j);
+                        // condição necessária para detecção do verde
                         if((data[1] > k * (data[0]+data[2])) & (data[0]+data[2] > t)){
-                            //if(data[1] > k * (data[0]+data[2])){
+
                             data[0]=255;
                             data[1]=255;
                             data[2]=255;
-                            //rgbGreen.put(i,j,255);
+
                             rgbGreen.put(i,j,data);
 
-                            //Log.i("DATA","NO PRIMEIRO IF ");
                         }else{
                             data[0]=0;
                             data[1]=0;
@@ -492,32 +514,36 @@ public class VideoActivity extends AppCompatActivity {
 
                 outErode = new Mat();
                 outDilate = new Mat();
-//            Imgproc.erode(rgbGreen, outErode, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(2,2)));
-//            Imgproc.dilate(outErode, outDilate, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(40, 40)));
+
+                // Operações morfologicas erosão e dilatação
                 Imgproc.erode(rgbGreen, outErode, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(erocao, erocao)));
                 Imgproc.dilate(outErode, outDilate, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(dilatacao, dilatacao)));
 
 
                 Mat outDilateGray = new Mat();
+
+                // Converte o resultado da dilatação para gray
                 Imgproc.cvtColor(outDilate, outDilateGray, Imgproc.COLOR_BGRA2GRAY);
 
                 List<MatOfPoint> contours = new ArrayList<>();
                 contours.clear();
                 Mat hierarchy = new Mat();
+                // Função retorna os contornos
                 Imgproc.findContours(outDilateGray, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
 
-//            Imgproc.drawContours(outDilate, contours, -1, new Scalar(0, 255, 0), 3);
+
                 Log.i("CONTORNO", "CONTORNO: " + contours.size());
 
-//            // daqui
+                // Momentos são utilizados para encontrar a soma dos pixels que compõem o contorno
                 List<Moments> mu = new ArrayList<>(contours.size());
-                //ArrayList<Moments> mmu = new ArrayList<>(contours.size());
 
+                // Variavel auxilar para encontrar o centroide do objeto.
                 List<Point> points = new ArrayList<>(); // Mudanca para usar ransac
 
 
+                // For responsavel por encontrar todos os centroides
                 for (int i = 0; i < contours.size(); i++) {
-                    //Moments moments = Imgproc.moments(contours.get(i));
+
                     mu.add(i, Imgproc.moments(contours.get(i), true));
                     Log.i("CONTOURS", "CONTOURS: " + contours.get(i).toList());
                     Log.i("CONTOURS", "CONTOURSMOMENTS: " + mu.size());
@@ -527,17 +553,20 @@ public class VideoActivity extends AppCompatActivity {
 
                     Point centroid = new Point();
 
+                    // Obtem os centroides de x e y
                     centroid.x = p.get_m10() / p.get_m00();
                     centroid.y = p.get_m01() / p.get_m00();
-                    //points.add(i, new Point(centroid.x,centroid.y));
-                    points.add(new Point(centroid.x,centroid.y)); // Mudanca para usar ransac
+
+                    points.add(new Point(centroid.x,centroid.y));
                     Log.i("PONTO", "X-Y: " + centroid);
                     Log.i("POINTS", "X-Y: " + points.get(i).x);
 
+                    // Adiciona o centroide no objeto
                     Core.circle(outDilate, centroid, 5, new Scalar(255, 0, 0), -1);
                 }
 
 
+                // For utilizado para remover o branco da imagem
                 for(int i=0; i<outDilate.rows(); i++){
                     for(int j=0; j<outDilate.cols(); j++){
                         double[] data = outDilate.get(i,j);
@@ -547,43 +576,31 @@ public class VideoActivity extends AppCompatActivity {
                             data[2]=0;
                             outDilate.put(i,j,data);
 
-                            //Log.i("DATA","NO PRIMEIRO IF ");
                         }else{
-//                        data[0]=0;
-//                        data[1]=0;
-//                        data[2]=0;
-//                        outDilate.put(i, j, data);
+
                         }
                     }
                 }
 
 
 
-                // ################# Versao antiga de deteccao de linha comeca aqui ####################
-
                 // generate gray scale and blur
-                Mat grayLine = new Mat(); // faz parte do antigo
-                Imgproc.cvtColor(outDilate, outDilateGray, Imgproc.COLOR_BGRA2GRAY); // faz parte do antigo
-                Imgproc.blur(outDilateGray, grayLine, new Size(3,3)); // faz parte do antigo
+                Mat grayLine = new Mat();
+                Imgproc.cvtColor(outDilate, outDilateGray, Imgproc.COLOR_BGRA2GRAY);
+                Imgproc.blur(outDilateGray, grayLine, new Size(3,3));
 
                 // detect the edges
-                Mat edges = new Mat(); // faz parte do antigo
-                int lowThreshold = 25; // faz parte do antigo
-                int ratio = 3; // faz parte do antigo
+                Mat edges = new Mat();
+                int lowThreshold = 25;
+                int ratio = 3;
 
 
-                Imgproc.Canny(grayLine, edges, lowThreshold, lowThreshold * ratio); // faz parte do antigo
+                Imgproc.Canny(grayLine, edges, lowThreshold, lowThreshold * ratio);
 
-                Mat lines = new Mat(); // faz parte do antigo
-                //Imgproc.HoughLinesP(edges, lines, 1, Math.PI / 180, 55, 70, 200);
+                Mat lines = new Mat(); // matriz auxiliar
 
-                //Imgproc.HoughLinesP(edges, lines, 5, Math.PI/180, 50, 420, 400); // faz parte do antigo, morango
-                //Imgproc.HoughLinesP(edges, lines, 5, Math.PI/180, 50, 300, 200); // faz parte do antigo, cebola
-                Imgproc.HoughLinesP(edges, lines, 1, Math.PI/180, minimoCruzamento, 350, 580); // faz parte do antigo, cebola novo (13-10-16)
-                //Imgproc.HoughLinesP(edges, lines, 10, Math.PI/180, 50, 420, 400);
+                Imgproc.HoughLinesP(edges, lines, 1, Math.PI/180, minimoCruzamento, 350, 580);
 
-                //Imgproc.HoughLines(edges, lines, 1, Math.PI / 180, 10, 50, 0);
-                //Imgproc.HoughLines(edges, lines, 1, Math.PI / 180, 10);
             /*
             - Saida do detector de bordas (edges)
             - Vetor que armazena os parametros de linhas detectadas (lines)
@@ -593,14 +610,10 @@ public class VideoActivity extends AppCompatActivity {
             - Numero minimo de pontos que podem formar uma linha (70)
             - Diferenca maxima entre dois pontos a serem considerados na mesma linha (200)
              */
-                //Imgproc.HoughLines(edges, lines, 1, Math.PI / 180, 100, 0, 0);
 
-//            Imgproc.HoughLines(edges, lines, 1, Math.PI / 180, 100, 50, 0);
-
-//            Log.i("LINE", "LINE "+lines.dump().toString());
-
-                for(int i = 0; i < lines.cols(); i++) { // faz parte do antigo
-                    double[] val = lines.get(0, i); // faz parte do antigo
+                // For detecta as linhas
+                for(int i = 0; i < lines.cols(); i++) {
+                    double[] val = lines.get(0, i);
 
                     Log.i("TAM", "TAM: "+i);
                     Log.i("PONTOS", "PONTO1 " +val[0]+" "+val[1]);
@@ -631,18 +644,13 @@ public class VideoActivity extends AppCompatActivity {
                         bicoCinco.setText("▇▇");
                     }
 
-                    Core.line(outDilate, new Point(val[0], val[1]), new Point(val[2], val[3]), new Scalar(0, 0, 255), 2); // faz parte do antigo
-                    //Core.line(outDilate, pt1, pt2, new Scalar(0, 0, 255), 3);
+                    Core.line(outDilate, new Point(val[0], val[1]), new Point(val[2], val[3]), new Scalar(0, 0, 255), 2);
                 }
                 displayImage(outDilate);
                 break;
             }
 
-
-
         }
-
-
 
         if(id == R.id.action_linha){
             if(sampledImage==null){

@@ -93,7 +93,7 @@ public class ImagemActivity extends AppCompatActivity {
     int cont3 = 0;
     int cont4 = 0;
     int cont5 = 0;
-    
+
 
     private float k = 0.68f;
     private final float kRST = 0.68f;
@@ -448,6 +448,7 @@ public class ImagemActivity extends AppCompatActivity {
 
 
         if(id == R.id.action_linha){
+
             if(sampledImage==null){
                 Context context = getApplicationContext();
                 CharSequence text = "Você precisa carregar uma imagem primeiro";
@@ -467,7 +468,7 @@ public class ImagemActivity extends AppCompatActivity {
             rgbGreen = new Mat();
 
             sampledImage.copyTo(rgbGreen);
-            //Size size = rgbGreen.size();
+            // For para percorrer linha x coluna
             for(int i=0; i<sampledImage.rows(); i++){
                 for(int j=0; j<sampledImage.cols(); j++){
                     double[] data = sampledImage.get(i,j);
@@ -534,7 +535,7 @@ public class ImagemActivity extends AppCompatActivity {
                 centroid.x = p.get_m10() / p.get_m00();
                 centroid.y = p.get_m01() / p.get_m00();
 
-                points.add(new Point(centroid.x,centroid.y)); // Mudanca para usar ransac
+                points.add(new Point(centroid.x,centroid.y));
                 Log.i("PONTO", "X-Y: " + centroid);
                 Log.i("POINTS", "X-Y: " + points.get(i).x);
 
@@ -560,24 +561,21 @@ public class ImagemActivity extends AppCompatActivity {
             }
 
 
-
-            // ################# Versao antiga de deteccao de linha comeca aqui ####################
-
             // generate gray scale and blur
-            Mat grayLine = new Mat(); // faz parte do antigo
-            Imgproc.cvtColor(outDilate, outDilateGray, Imgproc.COLOR_BGRA2GRAY); // faz parte do antigo
-            Imgproc.blur(outDilateGray, grayLine, new Size(3,3)); // faz parte do antigo
+            Mat grayLine = new Mat();
+            Imgproc.cvtColor(outDilate, outDilateGray, Imgproc.COLOR_BGRA2GRAY);
+            Imgproc.blur(outDilateGray, grayLine, new Size(3,3));
 
             // detect the edges
-            Mat edges = new Mat(); // faz parte do antigo
-            int lowThreshold = 25; // faz parte do antigo
-            int ratio = 3; // faz parte do antigo
+            Mat edges = new Mat();
+            int lowThreshold = 25;
+            int ratio = 3;
 
-            Imgproc.Canny(grayLine, edges, lowThreshold, lowThreshold * ratio); // faz parte do antigo
+            Imgproc.Canny(grayLine, edges, lowThreshold, lowThreshold * ratio);
 
             Mat lines = new Mat(); // matriz auxiliar
 
-            Imgproc.HoughLinesP(edges, lines, 1, Math.PI/180, minimoCruzamento, 300, 200); // faz parte do antigo, cebola novo (13-10-16)
+            Imgproc.HoughLinesP(edges, lines, 1, Math.PI/180, minimoCruzamento, 300, 200);
 
             /*
             - Saida do detector de bordas (edges)
@@ -590,62 +588,12 @@ public class ImagemActivity extends AppCompatActivity {
              */
 
 
-            for(int i = 0; i < lines.cols(); i++) { // faz parte do antigo
-                double[] val = lines.get(0, i); // faz parte do antigo
+            // For detecta as linhas
+            for(int i = 0; i < lines.cols(); i++) {
+                double[] val = lines.get(0, i);
                 Log.i("PONTOS", "PONTO1 " +val[0]+" "+val[1]);
                 Log.i("PONTOS", "PONTO2 " +val[2]+" "+val[3]);
 
-//                if((val[0]>= 30) && (val[0] < 90) && (cont1==1)){
-//                    cont1 = 2;
-//                    bicoUm.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
-//                    bicoUm.setText("▇▇");
-//                }
-//                if((val[0]>= 90) && (val[0] < 150) && (cont2 == 1)){
-//                    cont2 = 2;
-//                    bicoDois.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
-//                    bicoDois.setText("▇▇");
-//                }
-//                if((val[0]>= 150) && (val[0] < 180) && (cont3 == 1)){
-//                    cont3=2;
-//                    bicoTres.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
-//                    bicoTres.setText("▇▇");
-//                }
-//                if((val[0]>= 180) && (val[0] < 270) && (cont4 == 1)){
-//                    cont4 = 2;
-//                    bicoQuatro.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
-//                    bicoQuatro.setText("▇▇");
-//                }
-//                if((val[0]>= 270) && (val[0] <= 330) && (cont5==1)){
-//                    cont5=2;
-//                    bicoCinco.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
-//                    bicoCinco.setText("▇▇");
-//                }
-
-//                if(((val[0]>= 30) && (val[0] < 90)) && (cont1==1)){
-//                    cont1 = 2;
-//                    bicoUm.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
-//                    bicoUm.setText("▇▇");
-//                }
-//                if(((val[0]>= 90) && (val[0] < 150)) && (cont2 == 1)){
-//                    cont2 = 2;
-//                    bicoDois.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
-//                    bicoDois.setText("▇▇");
-//                }
-//                if(((val[0]>= 150) && (val[0] < 180)) && (cont3 == 1)){
-//                    cont3 = 2;
-//                    bicoTres.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
-//                    bicoTres.setText("▇▇");
-//                }
-//                if(((val[0]>= 180) && (val[0] < 300)) && (cont4 == 1)){
-//                    cont4 = 2;
-//                    bicoQuatro.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
-//                    bicoQuatro.setText("▇▇");
-//                }
-//                if((val[0]>= 270) && (val[0] <= 330) && (cont5==1)){
-//                    cont5=2;
-//                    bicoCinco.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
-//                    bicoCinco.setText("▇▇");
-//                }
 
                 if((val[0]> 30) && (val[0] < 90)){
                     bicoUm.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
@@ -670,7 +618,7 @@ public class ImagemActivity extends AppCompatActivity {
 
                 Core.line(outDilate, new Point(val[2], val[3]), new Point(val[0], val[1]), new Scalar(0, 0, 255), 2); // faz parte do antigo
                 val[0] = -1;
-            } // faz parte do antigo
+            }
 
             displayImage(outDilate);
         }
@@ -761,6 +709,7 @@ public class ImagemActivity extends AppCompatActivity {
         }
     }
 
+    // Função calcula novo tamanho da imagem
     private static double calculateSubSampleSize(Mat srcImage, double reqWidth, double reqHeight){
         final int heigth = srcImage.height();
         final int width = srcImage.width();
@@ -775,6 +724,7 @@ public class ImagemActivity extends AppCompatActivity {
         return inSampleSize;
     }
 
+    // Função para apresentar imagem na tela
     private void displayImage(Mat image){
         Bitmap bitmap = Bitmap.createBitmap(image.cols(), image.rows(), Bitmap.Config.RGB_565);
         Utils.matToBitmap(image, bitmap);
