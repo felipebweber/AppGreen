@@ -30,18 +30,18 @@ public class MainActivity extends AppCompatActivity {
 
         Permissao.validaPermissoes(1, this, permissoesNecessarias );
 
-        bt_calibrar = (Button) findViewById(R.id.calibrarCamera);
+        //bt_calibrar = (Button) findViewById(R.id.calibrarCamera);
         bt_detectarImagem = (Button) findViewById(R.id.detectarImagem);
         bt_detectarVideo = (Button) findViewById(R.id.detectarVideo);
         bt_tempoReal = (Button) findViewById(R.id.tempoReal);
 
-        bt_calibrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CameraCalibrationActivity.class);
-                startActivity(intent);
-            }
-        });
+//        bt_calibrar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MainActivity.this, CameraCalibrationActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         bt_detectarVideo.setOnClickListener(new View.OnClickListener() {
             @Override

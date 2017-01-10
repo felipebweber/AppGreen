@@ -11,16 +11,6 @@
     tools:context="com.example.felipe.appgreen.Activity.MainActivity">
 
     <Button
-        android:text="Detectar Imagem"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/calibrarCamera"
-        android:layout_alignEnd="@+id/calibrarCamera"
-        android:layout_marginTop="75dp"
-        android:id="@+id/detectarImagem"
-        android:layout_alignStart="@+id/calibrarCamera" />
-
-    <Button
         android:text="Detectar Video"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
@@ -29,21 +19,30 @@
         android:layout_marginTop="71dp"
         android:id="@+id/detectarVideo" />
 
-    <Button
-        android:text="Calibrar Camera"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="51dp"
-        android:id="@+id/calibrarCamera"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_width="150dp" />
+    <!--<Button-->
+        <!--android:text="Calibrar Camera"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="51dp"-->
+        <!--android:id="@+id/calibrarCamera"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_width="150dp" />-->
 
     <Button
-        android:text="Teste"
+        android:text="Camera"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/detectarVideo"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="43dp"
         android:id="@+id/tempoReal" />
+
+    <Button
+        android:text="Detectar Imagem"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:id="@+id/detectarImagem"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/detectarVideo" />
 </RelativeLayout>

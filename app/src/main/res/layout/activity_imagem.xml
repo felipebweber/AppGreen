@@ -24,7 +24,8 @@
         android:layout_toEndOf="@+id/btMenosKi"
         android:layout_height="25dp"
         android:layout_width="40dp"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:gravity="center" />
 
     <ImageView
         android:layout_width="match_parent"
@@ -59,7 +60,8 @@
         android:layout_marginBottom="9dp"
         android:layout_alignParentBottom="true"
         android:layout_toEndOf="@+id/btMenosTi"
-        android:layout_alignTop="@+id/textViewCi" />
+        android:layout_alignTop="@+id/textViewCi"
+        android:gravity="center" />
 
     <Button
         android:text="-"
@@ -96,7 +98,8 @@
         android:textAlignment="center"
         android:layout_alignBaseline="@+id/btMaisDi"
         android:layout_alignBottom="@+id/btMaisDi"
-        android:layout_toStartOf="@+id/btMaisDi" />
+        android:layout_toStartOf="@+id/btMaisDi"
+        android:gravity="center" />
 
     <Button
         android:text="-"
@@ -127,7 +130,8 @@
         android:textAlignment="center"
         android:layout_alignBaseline="@+id/btMaisEi"
         android:layout_alignBottom="@+id/btMaisEi"
-        android:layout_toStartOf="@+id/btMaisEi" />
+        android:layout_toStartOf="@+id/btMaisEi"
+        android:gravity="center" />
 
     <Button
         android:text="-"
@@ -176,7 +180,8 @@
         android:textAlignment="center"
         android:layout_marginBottom="11dp"
         android:layout_alignParentBottom="true"
-        android:layout_toStartOf="@+id/btMaisCi" />
+        android:layout_toStartOf="@+id/btMaisCi"
+        android:gravity="center" />
 
     <TextView
         android:text="C"
@@ -239,12 +244,12 @@
 
     <TextView
         android:text="||||||"
-        android:id="@+id/textBicoQuatro"
+        android:id="@+id/textBicoUm"
         android:layout_width="25dp"
         android:layout_height="20dp"
-        android:layout_alignBaseline="@+id/textBicoTres"
-        android:layout_alignBottom="@+id/textBicoTres"
-        android:layout_alignEnd="@+id/btResetEeDi" />
+        android:layout_alignBaseline="@+id/textBicoDois"
+        android:layout_alignBottom="@+id/textBicoDois"
+        android:layout_toStartOf="@+id/btMaisKi" />
 
     <TextView
         android:text="||||||"
@@ -253,7 +258,16 @@
         android:layout_height="20dp"
         android:layout_alignBaseline="@+id/textBicoQuatro"
         android:layout_alignBottom="@+id/textBicoQuatro"
-        android:layout_alignEnd="@+id/btMenosEi" />
+        android:layout_alignEnd="@+id/textView3" />
+
+    <TextView
+        android:text="||||||"
+        android:id="@+id/textBicoQuatro"
+        android:layout_width="25dp"
+        android:layout_height="20dp"
+        android:layout_alignBaseline="@+id/textBicoTres"
+        android:layout_alignBottom="@+id/textBicoTres"
+        android:layout_toStartOf="@+id/btMenosEi" />
 
     <TextView
         android:text="||||||"
@@ -262,16 +276,7 @@
         android:layout_height="20dp"
         android:layout_alignBaseline="@+id/textBicoTres"
         android:layout_alignBottom="@+id/textBicoTres"
-        android:layout_alignStart="@+id/btResetKeTi" />
-
-    <TextView
-        android:text="||||||"
-        android:id="@+id/textBicoUm"
-        android:layout_width="25dp"
-        android:layout_height="20dp"
-        android:layout_alignBaseline="@+id/textBicoDois"
-        android:layout_alignBottom="@+id/textBicoDois"
-        android:layout_alignStart="@+id/btMaisKi" />
+        android:layout_toEndOf="@+id/btMaisKi" />
 
 
 </RelativeLayout>

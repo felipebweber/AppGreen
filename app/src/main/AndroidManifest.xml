@@ -34,16 +34,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity.CameraCalibrationActivity"
-            android:label="@string/title_activity_camera_calibration"
-            android:parentActivityName=".Activity.MainActivity"
-            android:screenOrientation="landscape"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.felipe.appgreen.Activity.MainActivity" />
-        </activity>
-        <activity
             android:name=".Activity.VideoActivity"
             android:parentActivityName=".Activity.MainActivity"
             android:screenOrientation="portrait" />
@@ -54,6 +44,8 @@
         <activity
             android:name=".Activity.RealActivity"
             android:parentActivityName=".Activity.MainActivity"
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             ></activity>
     </application>
 

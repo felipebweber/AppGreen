@@ -109,6 +109,12 @@ public class VideoActivity extends AppCompatActivity {
     private int minimoCruzamento = 25;
     private final int minimoCruzamentoRST = 25;
 
+    int cont1 = 0;
+    int cont2 = 0;
+    int cont3 = 0;
+    int cont4 = 0;
+    int cont5 = 0;
+
 //    private final double k = 0.68;
 //    private final double t = 20;
 //
@@ -426,6 +432,12 @@ public class VideoActivity extends AppCompatActivity {
 
         if (id == R.id.action_processar){
 
+            cont1 = 1;
+            cont2 = 1;
+            cont3 = 1;
+            cont4 = 1;
+            cont5 = 1;
+
             bicoUm.setTextColor(getResources().getColor(R.color.colorBicoDesligado));
             bicoUm.setText("▇▇");
             bicoDois.setTextColor(getResources().getColor(R.color.colorBicoDesligado));
@@ -456,7 +468,7 @@ public class VideoActivity extends AppCompatActivity {
                 rgbGreen = new Mat();
 
                 sampledImage.copyTo(rgbGreen);
-                Size size = rgbGreen.size();
+                //Size size = rgbGreen.size();
                 for(int i=0; i<sampledImage.rows(); i++){
                     for(int j=0; j<sampledImage.cols(); j++){
                         double[] data = sampledImage.get(i,j);
@@ -590,25 +602,31 @@ public class VideoActivity extends AppCompatActivity {
                 for(int i = 0; i < lines.cols(); i++) { // faz parte do antigo
                     double[] val = lines.get(0, i); // faz parte do antigo
 
+                    Log.i("TAM", "TAM: "+i);
                     Log.i("PONTOS", "PONTO1 " +val[0]+" "+val[1]);
                     Log.i("PONTOS", "PONTO2 " +val[2]+" "+val[3]);
-                    if(val[0]> 0 && val[0] < 90){
+                    if(((val[0]> 0) && (val[0] < 90)) && (cont1==1)){
+                        cont1 = 2;
                         bicoUm.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
                         bicoUm.setText("▇▇");
                     }
-                    if(val[0]>= 90 && val[0] < 150){
+                    if(((val[0]>= 90) && (val[0] < 150)) && (cont2 == 1)){
+                        cont2 = 2;
                         bicoDois.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
                         bicoDois.setText("▇▇");
                     }
-                    if(val[0]>= 150 && val[0] < 180){
+                    if(((val[0]>= 150) && (val[0] < 180)) && (cont3 == 1)){
+                        cont3=2;
                         bicoTres.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
                         bicoTres.setText("▇▇");
                     }
-                    if(val[0]> 150 && val[0] < 270){
+                    if(((val[0]>= 180) && (val[0] < 270)) && (cont4 == 1)){
+                        cont4 = 2;
                         bicoQuatro.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
                         bicoQuatro.setText("▇▇");
                     }
-                    if(val[0]>= 270 && val[0] < 360){
+                    if(((val[0]>= 270) && (val[0] < 360)) && (cont5==1)){
+                        cont5=2;
                         bicoCinco.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
                         bicoCinco.setText("▇▇");
                     }
@@ -916,8 +934,8 @@ public class VideoActivity extends AppCompatActivity {
             //bitmap = retriever.getFrameAtTime(i*1000, FFmpegMediaMetadataRetriever.OPTION_CLOSEST);
             //bitmap = retriever.getFrameAtTime(i*1000);
             //bitmap = retriever.getFrameAtTime(i*2000, FFmpegMediaMetadataRetriever.OPTION_CLOSEST); //funcionando precariamente
-            bitmap = retriever.getFrameAtTime(i*1000, FFmpegMediaMetadataRetriever.OPTION_CLOSEST);
-            //bitmap = retriever.getScaledFrameAtTime(i*1000, 360, 480);
+            //bitmap = retriever.getFrameAtTime(i*1000, FFmpegMediaMetadataRetriever.OPTION_CLOSEST);
+            bitmap = retriever.getScaledFrameAtTime(i*1000, 360, 480);
 
             //bitmap = retriever.getScaledFrameAtTime(i, 360, 480);
             //bitmap = retriever.getScaledFrameAtTime(i, FFmpegMediaMetadataRetriever.OPTION_CLOSEST, 360, 480);

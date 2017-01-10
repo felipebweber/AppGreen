@@ -242,7 +242,8 @@
         android:layout_height="20dp"
         android:layout_alignBaseline="@+id/textBicoTres"
         android:layout_alignBottom="@+id/textBicoTres"
-        android:layout_alignEnd="@+id/btResetEeD" />
+        android:layout_alignEnd="@+id/btMenosE"
+        android:layout_marginEnd="25dp" />
 
     <TextView
         android:text="||||||"
@@ -251,7 +252,7 @@
         android:layout_height="20dp"
         android:layout_alignBaseline="@+id/textBicoTres"
         android:layout_alignBottom="@+id/textBicoTres"
-        android:layout_alignStart="@+id/btResetKeT" />
+        android:layout_toStartOf="@+id/btMenosC" />
 
     <TextView
         android:text="||||||"
@@ -260,7 +261,7 @@
         android:layout_height="20dp"
         android:layout_alignBaseline="@+id/textBicoDois"
         android:layout_alignBottom="@+id/textBicoDois"
-        android:layout_toEndOf="@+id/textView2" />
+        android:layout_alignStart="@+id/textView2" />
 
     <TextView
         android:text="||||||"
@@ -269,6 +270,6 @@
         android:layout_height="20dp"
         android:layout_alignBaseline="@+id/textBicoQuatro"
         android:layout_alignBottom="@+id/textBicoQuatro"
-        android:layout_toStartOf="@+id/textView3" />
+        android:layout_toStartOf="@+id/btMaisE" />
 
 </RelativeLayout>

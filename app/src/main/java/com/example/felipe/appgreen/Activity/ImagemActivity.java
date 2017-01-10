@@ -88,6 +88,11 @@ public class ImagemActivity extends AppCompatActivity {
     private TextView bicoQuatro;
     private TextView bicoCinco;
 
+    int cont1 = 0;
+    int cont2 = 0;
+    int cont3 = 0;
+    int cont4 = 0;
+    int cont5 = 0;
 
     // Esse era para o morango
 //    private final double k = 0.65;
@@ -449,6 +454,16 @@ public class ImagemActivity extends AppCompatActivity {
 //            bicoQuatro.setText("▇▇");
 //            bicoCinco.setTextColor(getResources().getColor(R.color.colorBicoDesligado));
 //            bicoCinco.setText("▇▇");
+            bicoUm.setTextColor(getResources().getColor(R.color.colorBicoDesligado));
+            bicoUm.setText("▇▇");
+            bicoDois.setTextColor(getResources().getColor(R.color.colorBicoDesligado));
+            bicoDois.setText("▇▇");
+            bicoTres.setTextColor(getResources().getColor(R.color.colorBicoDesligado));
+            bicoTres.setText("▇▇");
+            bicoQuatro.setTextColor(getResources().getColor(R.color.colorBicoDesligado));
+            bicoQuatro.setText("▇▇");
+            bicoCinco.setTextColor(getResources().getColor(R.color.colorBicoDesligado));
+            bicoCinco.setText("▇▇");
 
             displayImage(sampledImage);
         }
@@ -466,6 +481,11 @@ public class ImagemActivity extends AppCompatActivity {
                 return true;
             }
 
+            cont1 = 1;
+            cont2 = 1;
+            cont3 = 1;
+            cont4 = 1;
+            cont5 = 1;
 
             rgbGreen = new Mat();
 
@@ -610,27 +630,104 @@ public class ImagemActivity extends AppCompatActivity {
                 double[] val = lines.get(0, i); // faz parte do antigo
                 Log.i("PONTOS", "PONTO1 " +val[0]+" "+val[1]);
                 Log.i("PONTOS", "PONTO2 " +val[2]+" "+val[3]);
-                if(val[0]> 0 && val[0] < 90){
+
+//                if((val[0]>= 30) && (val[0] < 90) && (cont1==1)){
+//                    cont1 = 2;
+//                    bicoUm.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
+//                    bicoUm.setText("▇▇");
+//                }
+//                if((val[0]>= 90) && (val[0] < 150) && (cont2 == 1)){
+//                    cont2 = 2;
+//                    bicoDois.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
+//                    bicoDois.setText("▇▇");
+//                }
+//                if((val[0]>= 150) && (val[0] < 180) && (cont3 == 1)){
+//                    cont3=2;
+//                    bicoTres.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
+//                    bicoTres.setText("▇▇");
+//                }
+//                if((val[0]>= 180) && (val[0] < 270) && (cont4 == 1)){
+//                    cont4 = 2;
+//                    bicoQuatro.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
+//                    bicoQuatro.setText("▇▇");
+//                }
+//                if((val[0]>= 270) && (val[0] <= 330) && (cont5==1)){
+//                    cont5=2;
+//                    bicoCinco.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
+//                    bicoCinco.setText("▇▇");
+//                }
+
+                if(((val[0]>= 30) && (val[0] < 90)) && (cont1==1)){
+                    cont1 = 2;
                     bicoUm.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
                     bicoUm.setText("▇▇");
                 }
-                if(val[0]>= 90 && val[0] < 150){
+                if(((val[0]>= 90) && (val[0] < 150)) && (cont2 == 1)){
+                    cont2 = 2;
                     bicoDois.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
                     bicoDois.setText("▇▇");
                 }
-                if(val[0]>= 150 && val[0] < 180){
+                if(((val[0]>= 150) && (val[0] < 180)) && (cont3 == 1)){
+                    cont3=2;
                     bicoTres.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
                     bicoTres.setText("▇▇");
                 }
-                if(val[0]> 150 && val[0] < 270){
+                if(((val[0]>= 180) && (val[0] < 300)) && (cont4 == 1)){
+                    cont4 = 2;
                     bicoQuatro.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
                     bicoQuatro.setText("▇▇");
                 }
-                if(val[0]>= 270 && val[0] < 360){
+                if((val[0]>= 270) && (val[0] <= 330) && (cont5==1)){
+                    cont5=2;
                     bicoCinco.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
                     bicoCinco.setText("▇▇");
                 }
-                Core.line(outDilate, new Point(val[0], val[1]), new Point(val[2], val[3]), new Scalar(0, 0, 255), 2); // faz parte do antigo
+
+//                if(val[0]> 30 && val[0] < 90){
+//                    bicoUm.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
+//                    bicoUm.setText("▇▇");
+//                }
+//                if(val[0]>= 90 && val[0] < 150){
+//                    bicoDois.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
+//                    bicoDois.setText("▇▇");
+//                }
+//                if(val[0]>= 150 && val[0] < 180){
+//                    bicoTres.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
+//                    bicoTres.setText("▇▇");
+//                }
+//                if(val[0]> 180 && val[0] < 270){
+//                    bicoQuatro.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
+//                    bicoQuatro.setText("▇▇");
+//                }
+//                if(val[0]>= 270 && val[0] < 330){
+//                    bicoCinco.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
+//                    bicoCinco.setText("▇▇");
+//                }
+
+
+//                if((val[0]> 30) && (val[0] < 90)){
+//                    bicoUm.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
+//                    bicoUm.setText("▇▇");
+//                }
+//                else if((val[0]>= 90) && (val[0] < 150)){
+//                    bicoDois.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
+//                    bicoDois.setText("▇▇");
+//                }
+//                else if((val[0]>= 150) && (val[0] < 180)){
+//                    bicoTres.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
+//                    bicoTres.setText("▇▇");
+//                }
+//                else if((val[0]> 180) && (val[0] < 270)){
+//                    bicoQuatro.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
+//                    bicoQuatro.setText("▇▇");
+//                }
+//                else if((val[0]>= 270) && (val[0] < 330)){
+//                    bicoCinco.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
+//                    bicoCinco.setText("▇▇");
+//                }
+
+                Core.line(outDilate, new Point(val[2], val[3]), new Point(val[0], val[1]), new Scalar(0, 0, 255), 2); // faz parte do antigo
+                val[0] = -1;
                 //Core.line(outDilate, pt1, pt2, new Scalar(0, 0, 255), 3);
             } // faz parte do antigo
 
@@ -710,10 +807,12 @@ public class ImagemActivity extends AppCompatActivity {
         int heigth = displayMetrics.heightPixels; // altura
         Log.i("FLAG","LOAD IMAGE ANTES DOWNSAMPLERATIO");
         double downSampleRatio = calculateSubSampleSize(rgbImage,width,heigth);
+        //double downSampleRatio = calculateSubSampleSize(rgbImage,360,heigth);
 
         //Imgproc.resize(rgbImage,sampledImage,new Size(),width, height, Imgproc.INTER_AREA);
 
         Imgproc.resize(rgbImage, sampledImage, new Size(), downSampleRatio, downSampleRatio, Imgproc.INTER_AREA);
+        //Imgproc.resize(rgbImage, sampledImage, new Size(), 360, 480, Imgproc.INTER_AREA);
         Log.i("FLAG","LOAD IMAGE ANTES DO TRY");
         try {
             ExifInterface exif = new ExifInterface(selectedImagePath);
