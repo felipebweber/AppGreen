@@ -115,13 +115,6 @@ public class VideoActivity extends AppCompatActivity {
     int cont4 = 0;
     int cont5 = 0;
 
-//    private final double k = 0.68;
-//    private final double t = 20;
-//
-//    //private final float erocao = (float) 2.5;
-//    private final int erocao = 3;
-//    private final int dilatacao = 7;
-
     Mat sampledImage = null;
     Mat originalImage = null;
     Mat outErode = null;
@@ -652,161 +645,148 @@ public class VideoActivity extends AppCompatActivity {
 
         }
 
-        if(id == R.id.action_linha){
-            if(sampledImage==null){
-                Context context = getApplicationContext();
-                CharSequence text = "Você precisa carregar uma imagem primeiro";
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-                return true;
-            }
-
-
-            rgbGreen = new Mat();
-
-            sampledImage.copyTo(rgbGreen);
-            Size size = rgbGreen.size();
-            for(int i=0; i<sampledImage.rows(); i++){
-                for(int j=0; j<sampledImage.cols(); j++){
-                    double[] data = sampledImage.get(i,j);
-                    if((data[1] > k * (data[0]+data[2])) & (data[0]+data[2] > t)){
-                        //if(data[1] > k * (data[0]+data[2])){
-                        data[0]=255;
-                        data[1]=255;
-                        data[2]=255;
-                        //rgbGreen.put(i,j,255);
-                        rgbGreen.put(i,j,data);
-
-                        //Log.i("DATA","NO PRIMEIRO IF ");
-                    }else{
-                        data[0]=0;
-                        data[1]=0;
-                        data[2]=0;
-                        rgbGreen.put(i, j, data);
-                    }
-                }
-            }
-
-            outErode = new Mat();
-            outDilate = new Mat();
-//            Imgproc.erode(rgbGreen, outErode, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(2,2)));
-//            Imgproc.dilate(outErode, outDilate, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(40, 40)));
-            Imgproc.erode(rgbGreen, outErode, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(erocao, erocao)));
-            Imgproc.dilate(outErode, outDilate, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(dilatacao, dilatacao)));
-
-
-            Mat outDilateGray = new Mat();
-            Imgproc.cvtColor(outDilate, outDilateGray, Imgproc.COLOR_BGRA2GRAY);
-
-            List<MatOfPoint> contours = new ArrayList<>();
-            contours.clear();
-            Mat hierarchy = new Mat();
-            Imgproc.findContours(outDilateGray, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
-
-//            Imgproc.drawContours(outDilate, contours, -1, new Scalar(0, 255, 0), 3);
-            Log.i("CONTORNO", "CONTORNO: " + contours.size());
-
-//            // daqui
-            List<Moments> mu = new ArrayList<>(contours.size());
-            //ArrayList<Moments> mmu = new ArrayList<>(contours.size());
-
-            List<Point> points = new ArrayList<>(); // Mudanca para usar ransac
-
-
-            for (int i = 0; i < contours.size(); i++) {
-                //Moments moments = Imgproc.moments(contours.get(i));
-                mu.add(i, Imgproc.moments(contours.get(i), true));
-                Log.i("CONTOURS", "CONTOURS: " + contours.get(i).toList());
-                Log.i("CONTOURS", "CONTOURSMOMENTS: " + mu.size());
-                Log.i("CONTOURS", "CONTOURSMOMENTS: " + contours.size());
-
-                Moments p = mu.get(i);
-
-                Point centroid = new Point();
-
-                centroid.x = p.get_m10() / p.get_m00();
-                centroid.y = p.get_m01() / p.get_m00();
-                //points.add(i, new Point(centroid.x,centroid.y));
-                points.add(new Point(centroid.x,centroid.y)); // Mudanca para usar ransac
-                Log.i("PONTO", "X-Y: " + centroid);
-                Log.i("POINTS", "X-Y: " + points.get(i).x);
-
-                Core.circle(outDilate, centroid, 5, new Scalar(255, 0, 0), -1);
-            }
-
-
-            for(int i=0; i<outDilate.rows(); i++){
-                for(int j=0; j<outDilate.cols(); j++){
-                    double[] data = outDilate.get(i,j);
-                    if(data[0] == 255 & data[1] == 255 & data[2] == 255){
-                        data[0]=0;
-                        data[1]=0;
-                        data[2]=0;
-                        outDilate.put(i,j,data);
-
-                        //Log.i("DATA","NO PRIMEIRO IF ");
-                    }else{
+//        if(id == R.id.action_linha){
+//            if(sampledImage==null){
+//                Context context = getApplicationContext();
+//                CharSequence text = "Você precisa carregar uma imagem primeiro";
+//                int duration = Toast.LENGTH_SHORT;
+//
+//                Toast toast = Toast.makeText(context, text, duration);
+//                toast.show();
+//                return true;
+//            }
+//
+//
+//            rgbGreen = new Mat();
+//
+//            sampledImage.copyTo(rgbGreen);
+//            Size size = rgbGreen.size();
+//            for(int i=0; i<sampledImage.rows(); i++){
+//                for(int j=0; j<sampledImage.cols(); j++){
+//                    double[] data = sampledImage.get(i,j);
+//                    if((data[1] > k * (data[0]+data[2])) & (data[0]+data[2] > t)){
+//                        //if(data[1] > k * (data[0]+data[2])){
+//                        data[0]=255;
+//                        data[1]=255;
+//                        data[2]=255;
+//                        //rgbGreen.put(i,j,255);
+//                        rgbGreen.put(i,j,data);
+//
+//                        //Log.i("DATA","NO PRIMEIRO IF ");
+//                    }else{
 //                        data[0]=0;
 //                        data[1]=0;
 //                        data[2]=0;
-//                        outDilate.put(i, j, data);
-                    }
-                }
-            }
-
-
-
-            // ################# Versao antiga de deteccao de linha comeca aqui ####################
-
-            // generate gray scale and blur
-            Mat grayLine = new Mat(); // faz parte do antigo
-            Imgproc.cvtColor(outDilate, outDilateGray, Imgproc.COLOR_BGRA2GRAY); // faz parte do antigo
-            Imgproc.blur(outDilateGray, grayLine, new Size(3,3)); // faz parte do antigo
-
-            // detect the edges
-            Mat edges = new Mat(); // faz parte do antigo
-            int lowThreshold = 25; // faz parte do antigo
-            int ratio = 3; // faz parte do antigo
-
-
-            Imgproc.Canny(grayLine, edges, lowThreshold, lowThreshold * ratio); // faz parte do antigo
-
-            Mat lines = new Mat(); // faz parte do antigo
-            //Imgproc.HoughLinesP(edges, lines, 1, Math.PI / 180, 55, 70, 200);
-
-            //Imgproc.HoughLinesP(edges, lines, 5, Math.PI/180, 50, 420, 400); // faz parte do antigo, morango
-            //Imgproc.HoughLinesP(edges, lines, 5, Math.PI/180, 50, 300, 200); // faz parte do antigo, cebola
-            Imgproc.HoughLinesP(edges, lines, 1, Math.PI/180, 25, 300, 200); // faz parte do antigo, cebola novo (13-10-16)
-            //Imgproc.HoughLinesP(edges, lines, 10, Math.PI/180, 50, 420, 400);
-
-            //Imgproc.HoughLines(edges, lines, 1, Math.PI / 180, 10, 50, 0);
-            //Imgproc.HoughLines(edges, lines, 1, Math.PI / 180, 10);
-            /*
-            - Saida do detector de bordas (edges)
-            - Vetor que armazena os parametros de linhas detectadas (lines)
-            - Resolucao de parametro em pixels, 1 pixel (1)
-            - A resolucao do parametro em radianos, 1 grau (Math.PI/180)
-            - Numero minimo de cruzamentos para detectar uma linha (55)
-            - Numero minimo de pontos que podem formar uma linha (70)
-            - Diferenca maxima entre dois pontos a serem considerados na mesma linha (200)
-             */
-            //Imgproc.HoughLines(edges, lines, 1, Math.PI / 180, 100, 0, 0);
-
-//            Imgproc.HoughLines(edges, lines, 1, Math.PI / 180, 100, 50, 0);
-
-//            Log.i("LINE", "LINE "+lines.dump().toString());
-
-            for(int i = 0; i < lines.cols(); i++) { // faz parte do antigo
-                double[] val = lines.get(0, i); // faz parte do antigo
-
-                Core.line(outDilate, new Point(val[0], val[1]), new Point(val[2], val[3]), new Scalar(0, 0, 255), 2); // faz parte do antigo
-                //Core.line(outDilate, pt1, pt2, new Scalar(0, 0, 255), 3);
-            } // faz parte do antigo
-
-            displayImage(outDilate);
-        }
+//                        rgbGreen.put(i, j, data);
+//                    }
+//                }
+//            }
+//
+//            outErode = new Mat();
+//            outDilate = new Mat();
+//
+//            // Operações morfologicas erosão e dilatação
+//            Imgproc.erode(rgbGreen, outErode, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(erocao, erocao)));
+//            Imgproc.dilate(outErode, outDilate, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(dilatacao, dilatacao)));
+//
+//
+//            Mat outDilateGray = new Mat();
+//            // Converte o resultado da dilatação para gray
+//            Imgproc.cvtColor(outDilate, outDilateGray, Imgproc.COLOR_BGRA2GRAY);
+//
+//            List<MatOfPoint> contours = new ArrayList<>();
+//            contours.clear();
+//            Mat hierarchy = new Mat();
+//            // Função retorna os contornos
+//            Imgproc.findContours(outDilateGray, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
+//
+////            Imgproc.drawContours(outDilate, contours, -1, new Scalar(0, 255, 0), 3);
+//            Log.i("CONTORNO", "CONTORNO: " + contours.size());
+//
+//
+//            // Momentos são utilizados para encontrar a soma dos pixels que compõem o contorno
+//            List<Moments> mu = new ArrayList<>(contours.size());
+//
+//            // Variavel auxilar para encontrar o centroide do objeto.
+//            List<Point> points = new ArrayList<>();
+//
+//            // For responsavel por encontrar todos os centroides
+//            for (int i = 0; i < contours.size(); i++) {
+//
+//                mu.add(i, Imgproc.moments(contours.get(i), true));
+//                Log.i("CONTOURS", "CONTOURS: " + contours.get(i).toList());
+//                Log.i("CONTOURS", "CONTOURSMOMENTS: " + mu.size());
+//                Log.i("CONTOURS", "CONTOURSMOMENTS: " + contours.size());
+//
+//                Moments p = mu.get(i);
+//
+//                Point centroid = new Point();
+//                // Obtem os centroides de x e y
+//                centroid.x = p.get_m10() / p.get_m00();
+//                centroid.y = p.get_m01() / p.get_m00();
+//
+//                points.add(new Point(centroid.x,centroid.y));
+//                Log.i("PONTO", "X-Y: " + centroid);
+//                Log.i("POINTS", "X-Y: " + points.get(i).x);
+//                // Adiciona o centroide no objeto
+//                Core.circle(outDilate, centroid, 5, new Scalar(255, 0, 0), -1);
+//            }
+//
+//
+//            for(int i=0; i<outDilate.rows(); i++){
+//                for(int j=0; j<outDilate.cols(); j++){
+//                    double[] data = outDilate.get(i,j);
+//                    if(data[0] == 255 & data[1] == 255 & data[2] == 255){
+//                        data[0]=0;
+//                        data[1]=0;
+//                        data[2]=0;
+//                        outDilate.put(i,j,data);
+//
+//
+//                    }else{
+//
+//                    }
+//                }
+//            }
+//
+//
+//            // generate gray scale and blur
+//            Mat grayLine = new Mat(); // faz parte do antigo
+//            Imgproc.cvtColor(outDilate, outDilateGray, Imgproc.COLOR_BGRA2GRAY);
+//            Imgproc.blur(outDilateGray, grayLine, new Size(3,3));
+//
+//            // detect the edges
+//            Mat edges = new Mat(); // matriz auxiliar
+//            int lowThreshold = 25;
+//            int ratio = 3;
+//
+//
+//            Imgproc.Canny(grayLine, edges, lowThreshold, lowThreshold * ratio);
+//
+//            Mat lines = new Mat(); // matriz auxiliar
+//
+//            Imgproc.HoughLinesP(edges, lines, 1, Math.PI/180, 25, 300, 200);
+//
+//            /*
+//            - Saida do detector de bordas (edges)
+//            - Vetor que armazena os parametros de linhas detectadas (lines)
+//            - Resolucao de parametro em pixels, 1 pixel (1)
+//            - A resolucao do parametro em radianos, 1 grau (Math.PI/180)
+//            - Numero minimo de cruzamentos para detectar uma linha (55)
+//            - Numero minimo de pontos que podem formar uma linha (70)
+//            - Diferenca maxima entre dois pontos a serem considerados na mesma linha (200)
+//             */
+//
+//
+//            for(int i = 0; i < lines.cols(); i++) {
+//                double[] val = lines.get(0, i);
+//
+//                Core.line(outDilate, new Point(val[0], val[1]), new Point(val[2], val[3]), new Scalar(0, 0, 255), 2);
+//
+//            }
+//
+//            displayImage(outDilate);
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -865,54 +845,19 @@ public class VideoActivity extends AppCompatActivity {
     }
 
 
+    /*
+    Função loadVideo carrega video da bibioteca do dispositivo e divide em frames em um array list de bitmap
+     */
     private void loadVideo(String path){
-
-//        MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
-//        mediaMetadataRetriever.setDataSource(path);
-//        String durata = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-//        int durata_millisec = Integer.parseInt(durata);
-//        int durata_video_micros = durata_millisec * 1000;
-//        int durata_segundi = durata_millisec / 1000;
-//        String bitrate = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_BITRATE);
-//        int fps = 10;
-//        int numeroFrameCaptured = fps * durata_segundi;
-//        ArrayList<Bitmap> frames;
-//        frames = new ArrayList<>();
-//        Bitmap bmFrame;
-//        int totalFotogramas = (durata_millisec)/(1000 * fps);
-//        Log.i("FOTO", "FOTO  "+durata_millisec);
-//
-//        for(int i=0; i< durata_millisec; i+=100){
-//            //bmFrame = mediaMetadataRetriever.getFrameAtTime(100000*i, MediaMetadataRetriever.OPTION_CLOSEST);
-//            bmFrame = mediaMetadataRetriever.getFrameAtTime(1000*i, MediaMetadataRetriever.OPTION_CLOSEST);
-//            frames.add(bmFrame);
-//        }
-//
-//        try {
-////                ImageView iv = (ImageView) findViewById(R.id.imageView);
-////                iv.setImageBitmap(bitmap);
-//                saveFrames(frames);
-//
-//            }catch (IOException e){
-//                e.printStackTrace();
-//            }
-        //Bitmap bitmap = null;
-        //int j = 0;
-        //File videoFile = new File(path);
-//        Mat teste = Highgui.imread(path);
-//        teste.release();
-
-        //VideoCapture videoCapture = new VideoCapture(Integer.parseInt(path));
 
 
 
         Uri videoFileUri = Uri.parse(path);
-        //MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+
         FFmpegMediaMetadataRetriever retriever = new FFmpegMediaMetadataRetriever();
         retriever.setDataSource(path);
 
-        //retriever.setDataSource(videoFile.getAbsolutePath());
-//        ArrayList<Bitmap> rev = new ArrayList<>();
+
 
 
         //Create a new Media Player
@@ -935,30 +880,15 @@ public class VideoActivity extends AppCompatActivity {
 //            e.printStackTrace();
 //        }
         for(int i = 1000; i < millis-1000; i+=1000) { //int i = 0; i < millis; i+=1000
-            //j++;
-            ///Bitmap bitmap = retriever.getFrameAtTime(i * 1000, MediaMetadataRetriever.OPTION_CLOSEST);
-            //Bitmap bitmap = retriever.getFrameAtTime(millis, MediaMetadataRetriever.OPTION_CLOSEST);
-            //bitmap = retriever.getFrameAtTime();
-            //bitmap = retriever.getFrameAtTime(i*1000, FFmpegMediaMetadataRetriever.OPTION_CLOSEST);
-            //bitmap = retriever.getFrameAtTime(i*1000);
-            //bitmap = retriever.getFrameAtTime(i*2000, FFmpegMediaMetadataRetriever.OPTION_CLOSEST); //funcionando precariamente
+
             //bitmap = retriever.getFrameAtTime(i*1000, FFmpegMediaMetadataRetriever.OPTION_CLOSEST);
             bitmap = retriever.getScaledFrameAtTime(i*1000, 360, 480);
-
-            //bitmap = retriever.getScaledFrameAtTime(i, 360, 480);
-            //bitmap = retriever.getScaledFrameAtTime(i, FFmpegMediaMetadataRetriever.OPTION_CLOSEST, 360, 480);
-
-            //bitmap = Highgui.CV_CAP_PROP_FRAME_HEIGHT
-            //Highgui.CV_CAP_PROP_FRAME_HEIGHT
-
 
             rev.add(bitmap);
             Log.i("BITMAP", "BITMAP "+rev.size());
 
-            //}
+
             try {
-//                ImageView iv = (ImageView) findViewById(R.id.imageView);
-//                iv.setImageBitmap(bitmap);
                 saveFrames(rev);
 
             }catch (IOException e){
@@ -966,18 +896,11 @@ public class VideoActivity extends AppCompatActivity {
             }
         }
 
-
-//        for(int i = 0; i < millis; i+=1000){
-//            Bitmap bitmap = retriever.getFrameAtTime(i * 1000 ,MediaMetadataRetriever.OPTION_CLOSEST);
-//            ImageView iv = (ImageView) findViewById(R.id.imageView);
-//            iv.setImageBitmap(bitmap);
-//        }
-
-//        Bitmap bitmap = retriever.getFrameAtTime(millis ,MediaMetadataRetriever.OPTION_CLOSEST);
-//        ImageView iv = (ImageView) findViewById(R.id.imageView);
-//        iv.setImageBitmap(bitmap);
     }
 
+    /*
+    Função saveFrames salva os frames no dispositivo
+     */
     public void saveFrames(ArrayList<Bitmap> saveBitmapList) throws IOException{
 
         diretorioApp = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + nomeDiretorio +"/";
@@ -1020,6 +943,11 @@ public class VideoActivity extends AppCompatActivity {
         }
     }
 
+
+    /*
+    As funções carregaValores são utilizadas para carregar os valores de K, T, E, D e minimo cruzamento para serem
+    utilizadas no programa
+     */
     private void carregaValoresKeT(){
         PreferenciasKeT preferenciasKeT = new PreferenciasKeT(VideoActivity.this);
         float kk = preferenciasKeT.get_k();

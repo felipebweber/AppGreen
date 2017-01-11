@@ -745,6 +745,12 @@ public class ImagemActivity extends AppCompatActivity {
         }
     }
 
+
+    /*
+    As funções carregaValores são utilizadas para carregar os valores de K, T, E, D e minimo cruzamento para serem
+    utilizadas no programa
+     */
+
     // Carrega os valores K e T
     private void carregaValoresKeT(){
         PreferenciasKeT preferenciasKeT = new PreferenciasKeT(ImagemActivity.this);
