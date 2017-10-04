@@ -1,6 +1,10 @@
 [
     {
-        "outputFile": "/Users/felipe/Dropbox/Android Studio Projects/AppGreen/libs/opencv/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values/values.xml",
+        "outputFile": "E:\\Documents\\GitHub\\AppGreen\\libs\\opencv\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
+        "map": []
+    },
+    {
+        "outputFile": "E:\\Users\\felipe\\Dropbox\\Android Studio Projects\\AppGreen\\libs\\opencv\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
         "map": []
     }
 ]
