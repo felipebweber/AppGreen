@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.felipe.appgreen">
 
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -33,20 +35,31 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Activity.VideoActivity"
-            android:parentActivityName=".Activity.MainActivity"
-            android:screenOrientation="portrait" />
+        <!--<activity-->
+            <!--android:name=".Activity.VideoActivity"-->
+            <!--android:parentActivityName=".Activity.MainActivity"-->
+            <!--android:screenOrientation="portrait" />-->
+
         <activity
             android:name=".Activity.ImagemActivity"
             android:parentActivityName=".Activity.MainActivity"
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".Activity.RealActivity"
+            android:name=".Bluetooth.MenuBluetooth"
             android:parentActivityName=".Activity.MainActivity"
-            android:screenOrientation="landscape"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            ></activity>
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Bluetooth.ListaDispositivosBluetooth"
+            android:parentActivityName=".Bluetooth.MenuBluetooth"
+            android:screenOrientation="portrait"/>
+
+        <!--<activity-->
+            <!--android:name=".Activity.RealActivity"-->
+            <!--android:parentActivityName=".Activity.MainActivity"-->
+            <!--android:screenOrientation="landscape"-->
+            <!--android:configChanges="keyboardHidden|orientation|screenSize"-->
+            <!--&gt;</activity>-->
     </application>
 
 </manifest>
