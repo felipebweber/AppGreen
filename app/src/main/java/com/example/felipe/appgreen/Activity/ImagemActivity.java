@@ -121,6 +121,7 @@ public class ImagemActivity extends AppCompatActivity {
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -595,6 +596,7 @@ public class ImagemActivity extends AppCompatActivity {
                 Log.i("PONTOS", "PONTO2 " +val[2]+" "+val[3]);
 
 
+
                 if((val[0]> 30) && (val[0] < 90)){
                     bicoUm.setTextColor(getResources().getColor(R.color.colorBicoAcionado));
                     bicoUm.setText("▇▇");
@@ -616,7 +618,7 @@ public class ImagemActivity extends AppCompatActivity {
                     bicoCinco.setText("▇▇");
                 }
 
-                Core.line(outDilate, new Point(val[2], val[3]), new Point(val[0], val[1]), new Scalar(0, 0, 255), 2); // faz parte do antigo
+                Core.line(outDilate, new Point(val[2], val[3]), new Point(val[0], val[1]), new Scalar(0, 255, 0), 255); // faz parte do antigo
                 val[0] = -1;
             }
 
