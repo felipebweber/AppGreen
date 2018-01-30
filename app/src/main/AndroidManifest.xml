@@ -45,14 +45,14 @@
             android:parentActivityName=".Activity.MainActivity"
             android:screenOrientation="portrait" />
 
-        <activity
-            android:name=".Bluetooth.MenuBluetooth"
-            android:parentActivityName=".Activity.MainActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".Bluetooth.ListaDispositivosBluetooth"
-            android:parentActivityName=".Bluetooth.MenuBluetooth"
-            android:screenOrientation="portrait"/>
+        <!--<activity-->
+            <!--android:name=".Bluetooth.MenuBluetooth"-->
+            <!--android:parentActivityName=".Activity.MainActivity"-->
+            <!--android:screenOrientation="portrait"/>-->
+        <!--<activity-->
+            <!--android:name=".Bluetooth.ListaDispositivosBluetooth"-->
+            <!--android:parentActivityName=".Bluetooth.MenuBluetooth"-->
+            <!--android:screenOrientation="portrait"/>-->
 
         <!--<activity-->
             <!--android:name=".Activity.RealActivity"-->

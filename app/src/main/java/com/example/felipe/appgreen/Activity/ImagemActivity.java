@@ -618,7 +618,7 @@ public class ImagemActivity extends AppCompatActivity {
                     bicoCinco.setText("▇▇");
                 }
 
-                Core.line(outDilate, new Point(val[2], val[3]), new Point(val[0], val[1]), new Scalar(0, 255, 0), 255); // faz parte do antigo
+                Core.line(outDilate, new Point(val[2], val[3]), new Point(val[0], val[1]), new Scalar(0, 255, 0), 3); // faz parte do antigo
                 val[0] = -1;
             }
 

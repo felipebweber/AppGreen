@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.felipe.appgreen.Bluetooth.MenuBluetooth;
 import com.example.felipe.appgreen.R;
 import com.example.felipe.appgreen.Tools.Permissao;
 
@@ -37,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         bt_detectarImagem = (Button) findViewById(R.id.detectarImagem);
         //bt_detectarVideo = (Button) findViewById(R.id.detectarVideo);
         //bt_tempoReal = (Button) findViewById(R.id.tempoReal);
-        bt_bluetooth = (Button) findViewById(R.id.bluetooth);
+//        bt_bluetooth = (Button) findViewById(R.id.bluetooth);
 
 //        bt_calibrar.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -71,12 +70,12 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
-        bt_bluetooth.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MenuBluetooth.class);
-                startActivity(intent);
-            }
-        });
+//        bt_bluetooth.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MainActivity.this, MenuBluetooth.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 }
