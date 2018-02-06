@@ -12,7 +12,7 @@ INJECTED from E:\Documents\GitHub\AppGreen\libs\opencv\AndroidManifest.xml:2:1-8
 		INJECTED from E:\Documents\GitHub\AppGreen\libs\opencv\AndroidManifest.xml
 		INJECTED from E:\Documents\GitHub\AppGreen\libs\opencv\AndroidManifest.xml
 	android:versionName
-		ADDED from E:\Documents\GitHub\AppGreen\libs\opencv\AndroidManifest.xml:5:7-35
+		ADDED from E:\Documents\GitHub\AppGreen\libs\opencv\AndroidManifest.xml:5:7-37
 		INJECTED from E:\Documents\GitHub\AppGreen\libs\opencv\AndroidManifest.xml
 		INJECTED from E:\Documents\GitHub\AppGreen\libs\opencv\AndroidManifest.xml
 	xmlns:android
