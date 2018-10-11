@@ -39,7 +39,7 @@ import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
-import org.opencv.highgui.Highgui;
+import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.imgproc.Moments;
 
@@ -541,7 +541,7 @@ public class ImagemActivity extends AppCompatActivity {
                 Log.i("POINTS", "X-Y: " + points.get(i).x);
 
                 // Adiciona o centroide no objeto
-                Core.circle(outDilate, centroid, 5, new Scalar(255, 0, 0), -1);
+                Imgproc.circle(outDilate, centroid, 5, new Scalar(255, 0, 0), -1);
             }
 
 
@@ -576,7 +576,7 @@ public class ImagemActivity extends AppCompatActivity {
 
             Mat lines = new Mat(); // matriz auxiliar
 
-            Imgproc.HoughLinesP(edges, lines, 1, Math.PI/180, minimoCruzamento, 300, 200);
+            Imgproc.HoughLinesP(edges, lines, 2, Math.PI/180, minimoCruzamento, 300, 200);
 
             /*
             - Saida do detector de bordas (edges)
@@ -618,7 +618,7 @@ public class ImagemActivity extends AppCompatActivity {
                     bicoCinco.setText("▇▇");
                 }
 
-                Core.line(outDilate, new Point(val[2], val[3]), new Point(val[0], val[1]), new Scalar(0, 255, 0), 3); // faz parte do antigo
+                Imgproc.line(outDilate, new Point(val[2], val[3]), new Point(val[0], val[1]), new Scalar(0, 255, 0), 3); // faz parte do antigo
                 val[0] = -1;
             }
 
@@ -660,7 +660,7 @@ public class ImagemActivity extends AppCompatActivity {
     private void loadImage(String path){
         Log.i("FLAG","LOAD IMAGE " + path);
 
-        originalImage = Highgui.imread(path);
+        originalImage = Imgcodecs.imread(path);
         Log.i("FLAG", "Depois do original image "+originalImage);
         rgbImage = new Mat();
         sampledImage = new Mat();
